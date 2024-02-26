@@ -23,7 +23,7 @@ session_start();
 		<!-- End Preloader Area -->
 
 		<?php include "config/whiteList.php"; ?>
-
+		monitor
 		<?php include "js.php"; ?>
 
 	</div>
