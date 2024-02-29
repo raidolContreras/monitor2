@@ -1,3 +1,6 @@
+<!-- Datatables css -->
+<link href="view\assets\vendor\Datatables\datatables.css" rel="stylesheet">
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -10,6 +13,7 @@
 
 <link rel="stylesheet" href="view/assets/css/tiny-slider.css" />
 <link rel="stylesheet" href="view/assets/css/aos.css" />
+
 <link rel="stylesheet" href="view/assets/css/style.css" />
 
 <!-- Font Awesome (para iconos) -->

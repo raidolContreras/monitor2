@@ -13,6 +13,7 @@ session_start();
 <html lang="zxx">
 
 <head>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<title>Monitor - UNIMO</title>
 	<?php include "css.php"; ?>
 </head>

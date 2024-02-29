@@ -15145,7 +15145,7 @@ body {
 }
 
 .navbar-toggler {
-  border: none;
+  border: none !important;
   display: block;
   /* Asegura que el botón siempre sea visible */
   position: relative;
