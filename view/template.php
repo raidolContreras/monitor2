@@ -24,7 +24,44 @@ session_start();
 	<?php include "pages/navs/header.php"; ?>
 	<?php include "pages/inicio.php"; ?>
 	
+	
+	<!-- Modal para el registro de eventos -->
+	<div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="newUserModalLabel">Nuevo usuario</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times-circle"></i></button>
+				</div>
+				<div class="modal-body">
+					<!-- Formulario para registro de eventos -->
+					<form id="events">
+						<input type="text" class="form-control" placeholder="Nombre del usuario" name="userName">
+						<input type="text" class="form-control" placeholder="Correo electrónico" name="email">
+						<input type="text" class="form-control" placeholder="Contraseña" name="password">
+						<select class="form-control" name="level" id="level">
+							<option>Seleccione el nivel</option>
+							<option value="1">Administrador</option>
+							<option value="2">Usuario general</option>
+						</select>
+					</form>
+					<div class="center-buttons mt-4">
+						<button type="button" class="btn btn-primary mx-1">Registrar</button>
+						<button type="button" class="btn btn-danger mx-1" data-bs-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 <?php include "js.php"; ?>
+<script>
+	
+    function closeMenu() {
+        document.querySelector('.navbar-collapse').classList.remove('show');
+        document.querySelector('.navbar-toggler').classList.remove('active');
+    }
+</script>
 
 </html>

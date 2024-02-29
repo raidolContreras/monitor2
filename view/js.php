@@ -24,10 +24,5 @@ $(document).ready(function() {
       this.classList.toggle('active');
     });
 
-    function closeMenu() {
-        document.querySelector('.navbar-collapse').classList.remove('show');
-        document.querySelector('.navbar-toggler').classList.remove('active');
-    }
-
 });
 </script>

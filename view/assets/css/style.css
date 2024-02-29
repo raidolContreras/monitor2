@@ -15323,6 +15323,7 @@ body {
   background-color: #EFEFEF;
   padding: 5px 15px;
   border-radius: 20px;
+  color: #ABABAB;
 }
 
 .form-control:hover,
@@ -15345,4 +15346,44 @@ body {
   justify-content: center; /* Centrar horizontalmente */
   align-items: center; /* Centrar verticalmente */
   text-align: center; /* Asegurar que el texto esté centrado */
+}
+
+.dt-column-title{
+  display: grid;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 1rem;
+}
+
+.btn-custom {
+  padding: 8px 8px;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 4px;
+  color: #0A8917;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  font-weight: bold;
+}
+
+.btn-activar { color: #189337; }
+.btn-editar { color: #01643D; }
+.btn-eliminar { color: #D80000; }
+
+.btn-activar:hover {
+  color: #086611; 
+}
+
+.btn-editar:hover {
+  color: #093F2A;
+}
+
+.btn-eliminar:hover {
+  color: #7F1E1E;
+}
+
+.table-columns {
+  font-size: 16px;
 }
