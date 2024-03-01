@@ -53,11 +53,22 @@ $(document).ready(function() {
 					}
 				}
         
+			},
+			{
+				data: null,
+				render: function(data) {
+					return `
+						<center class="table-columns">
+							<button class="btn-custom btn-invitados" data-idEvent="` + data.idEvent + `">Ver invitados <i class="fas fa-chevron-right"></i></button>
+						</center>
+					`;
+				}
 			}
 		],
 		"language": {
 			"url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
 		},
+		"ordering": false
 	});
 
 	$("form.events").submit(function (event) {
@@ -96,3 +107,8 @@ function clearForm(){
 	$("input[name='eventName']").val('');
 	$("input[name='dateEvent']").val('');
 }
+
+$(document).on('click', '.btn-invitados', function() {
+    var eventId = $(this).data('idevent');
+    window.location.href = 'invitados&event='+eventId; // Redirigir a la página de invitados
+});

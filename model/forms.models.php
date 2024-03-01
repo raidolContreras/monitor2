@@ -8,17 +8,32 @@ class FormsModel {
             if ($idEvent !== null) {
                 $stmt = $pdo->prepare('SELECT * FROM unimo_events WHERE idEvent = :idEvent');
                 $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
+    
+                $stmt->execute();
+                return $stmt->fetch(PDO::FETCH_ASSOC);
             } else {
                 $stmt = $pdo->prepare('SELECT * FROM unimo_events');
+                
+                $stmt->execute();
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
+        } catch (PDOException $e) {
+            error_log("Error en la consulta SQL: " . $e->getMessage());
+            throw $e;
+        }
+    }
+    
+    static public function mdlGetInvitados($idEvent){
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('SELECT * FROM unimo_invitados WHERE idEvent = :idEvent');
+            $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
     
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            // En un entorno de producción, deberías manejar esto de otra manera
-            // Por ejemplo, puedes registrar el error en un archivo de logs
             error_log("Error en la consulta SQL: " . $e->getMessage());
-            throw $e; // O lanzar la excepción para manejarla en una capa superior
+            throw $e;
         }
     }
 
@@ -33,7 +48,7 @@ class FormsModel {
             if ($stmt->execute()) {
                 return 'ok';
             } else {
-                return false; // O manejar el error como prefieras
+                return false;
             }
         } catch (PDOException $e) {
             error_log("Error al registrar el evento: " . $e->getMessage());

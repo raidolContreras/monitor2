@@ -12,7 +12,8 @@
 			<thead>
 				<th>Nombre del Evento</th>
 				<th>Fecha del evento</th>
-				<th width="25%">Status</th>
+				<th>Status</th>
+				<th width="25%">Invitados</th>
 			</thead>
 		</table>
 	</div>

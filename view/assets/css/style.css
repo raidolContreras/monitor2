@@ -15346,14 +15346,17 @@ body {
   justify-content: center; /* Centrar horizontalmente */
   align-items: center; /* Centrar verticalmente */
   text-align: center; /* Asegurar que el texto esté centrado */
+  padding: 8px 8px;
 }
 
 .dt-column-title{
   display: grid;
   justify-content: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   font-size: 1rem;
+  background-color: #01643D;
+  color: #fefefe;
 }
 
 .btn-custom {
@@ -15369,8 +15372,13 @@ body {
 }
 
 .btn-activar { color: #189337; }
+.btn-invitados { color: #189337; font-weight: normal; }
 .btn-editar { color: #01643D; }
 .btn-eliminar { color: #D80000; }
+
+.btn-activar:hover {
+  color: #086611; 
+}
 
 .btn-activar:hover {
   color: #086611; 
@@ -15386,4 +15394,61 @@ body {
 
 .table-columns {
   font-size: 1rem;
+}
+
+.dt-orderable-none{
+  padding: 1px !important;
+}
+
+.btn-custom.btn-invitados .fa-chevron-right {
+  transition: transform 0.3s ease; /* Agregar una transición para suavizar el movimiento */
+}
+
+.btn-custom.btn-invitados:hover .fa-chevron-right {
+  transform: translateX(5px); /* Mover el ícono 5px hacia la derecha al hacer hover */
+}
+
+.btn-circle-success,
+.btn-circle-danger {
+  width: 30px; /* Ajusta el tamaño según sea necesario */
+  height: 30px; /* Ajusta el tamaño según sea necesario */
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.btn-circle-success {
+  background-color: #01643D; /* Verde */
+}
+
+.btn-circle-danger {
+  background-color: #D80000; /* Rojo */
+}
+
+.btn-circle-success i,
+.btn-circle-danger i {
+  color: #ffffff; /* Color del icono */
+}
+
+/* Estilo del dropzone */
+.dropzone {
+    border: 2px dashed #4CAF50 !important; /* color de borde punteado */
+    border-radius: 10px !important; /* bordes redondeados */
+    padding: 20px !important;
+    background: white !important; /* fondo blanco */
+    text-align: center !important; /* texto centrado */
+}
+
+/* Estilo del mensaje por defecto en dropzone */
+.dropzone .dz-message {
+    color: #0a0a0a !important; /* color del texto */
+    font-size: 20px !important; /* tamaño del texto */
+}
+.dz-button span {
+  font-size: 12px;
 }

@@ -1,7 +1,7 @@
 <header>
 	<nav class="navbar">
 		<div class="container">
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="./">
 				<img src="view/assets/images/logo.png" alt="Logo" class="logo">
 			</a>
 			<button class="navbar-toggler boton-sombra" type="button" aria-label="Toggle navigation">

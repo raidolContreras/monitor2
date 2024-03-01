@@ -21,10 +21,7 @@ session_start();
 <body>
 	
 	<?php include "config/whiteList.php"; ?>
-	<?php include "pages/navs/header.php"; ?>
-	<?php include "pages/inicio.php"; ?>
-	
-	
+
 	<!-- Modal para el registro de eventos -->
 	<div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

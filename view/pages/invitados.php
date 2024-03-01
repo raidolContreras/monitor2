@@ -1,0 +1,74 @@
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+<main class="container">
+    <div class="card-custom">
+        <div class="card-header-custom">
+            <strong id="evento"></strong>
+        </div>
+    </div>
+
+    <button class="btn btn-primary mb-3 float-end" data-bs-toggle="modal" data-bs-target="#invitadosModal">Registrar invitados</button>
+	
+	<div>
+		<table id="tableEvents" class="table table-resposive stripe">
+			<thead>
+				<th>Invitado</th>
+				<th>Institución</th>
+				<th>Puesto</th>
+				<th>Color</th>
+				<th>Anfitrión</th>
+				<th>Asistencia</th>
+			</thead>
+		</table>
+	</div>
+</main>
+<input type="hidden" name="idEvent" value="<?php echo $_GET['event'] ?>">
+<!-- Modal para el registro de eventos -->
+<div class="modal fade" id="invitadosModal" tabindex="-1" aria-labelledby="invitadosModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="invitadosModalLabel">Registrar invitados</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times-circle"></i></button>
+			</div>
+			<div class="modal-body">
+				<center>
+					<a class="btn-custom btn-editar mb-4" download>Descargar plantilla</a>
+				</center>
+				<form class="registerInv">
+					<!-- Agrega un elemento div con el id myDropzone para Dropzone -->
+					<div id="myDropzone" class="dropzone"></div>
+				</form>
+				<div class="center-buttons mt-4">
+					<button type="submit" class="btn btn-primary mx-1" data-bs-dismiss="modal">Registrar</button>
+					<button type="button" class="btn btn-danger mx-1" data-bs-dismiss="modal">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="view\assets\js\events\getInvitados.js"></script>
+
+<script>
+    // Inicializa Dropzone en el formulario
+    Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone("#myDropzone", {
+		autoProcessQueue: false,
+        url: "tu-url-de-subida", // Especifica la URL donde se enviarán los archivos
+        paramName: "file", // Nombre del parámetro que contiene los archivos en la solicitud POST
+        maxFilesize: 10, // Tamaño máximo de archivo en MB
+        acceptedFiles: ".csv, .xlsx", // Tipos de archivo aceptados
+        dictDefaultMessage: "Arrastra y suelta el archivo<br><span>Carga archivos: xlsx, csv, tamaño máximo 10 MB.</span>",
+        dictFallbackMessage: "Tu navegador no admite la carga de archivos mediante arrastrar y soltar.",
+        dictFileTooBig: "El archivo es demasiado grande ({{filesize}} MB). Tamaño máximo permitido: {{maxFilesize}} MB.",
+        dictInvalidFileType: "No puedes subir archivos de este tipo.",
+        dictResponseError: "El servidor respondió con el código {{statusCode}}.",
+        dictCancelUpload: "Cancelar subida",
+        dictCancelUploadConfirmation: "¿Estás seguro de que deseas cancelar esta subida?",
+        dictRemoveFile: "Eliminar archivo",
+        dictRemoveFileConfirmation: null,
+        dictMaxFilesExceeded: "No puedes subir más archivos.",
+        addRemoveLinks: true, // Agrega enlaces para eliminar archivos cargados
+    });
+</script>
