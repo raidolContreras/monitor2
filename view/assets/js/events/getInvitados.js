@@ -1,6 +1,5 @@
 $(document).ready(function() {
-    var idEvent = $('input[name="idEvent"]').val(); // Obtener el valor de idEvent después de que el documento esté completamente cargado
-
+    var idEvent = $('input[name="idEvent"]').val();
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getEvents.php',

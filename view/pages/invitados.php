@@ -34,14 +34,14 @@
 			</div>
 			<div class="modal-body">
 				<center>
-					<a class="btn-custom btn-editar mb-4" download>Descargar plantilla</a>
+					<a class="btn-custom btn-editar mb-4" href="view/assets/docs/Plantilla de invitaciones a eventos.csv" download>Descargar plantilla</a>
 				</center>
 				<form class="registerInv">
 					<!-- Agrega un elemento div con el id myDropzone para Dropzone -->
 					<div id="myDropzone" class="dropzone"></div>
 				</form>
 				<div class="center-buttons mt-4">
-					<button type="submit" class="btn btn-primary mx-1" data-bs-dismiss="modal">Registrar</button>
+					<button type="submit" class="btn btn-primary mx-1" id="register" data-bs-dismiss="modal">Registrar</button>
 					<button type="button" class="btn btn-danger mx-1" data-bs-dismiss="modal">Cancelar</button>
 				</div>
 			</div>
@@ -51,15 +51,14 @@
 <script src="view\assets\js\events\getInvitados.js"></script>
 
 <script>
-    // Inicializa Dropzone en el formulario
     Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone("#myDropzone", {
 		autoProcessQueue: false,
-        url: "tu-url-de-subida", // Especifica la URL donde se enviarán los archivos
-        paramName: "file", // Nombre del parámetro que contiene los archivos en la solicitud POST
-        maxFilesize: 10, // Tamaño máximo de archivo en MB
-        acceptedFiles: ".csv, .xlsx", // Tipos de archivo aceptados
-        dictDefaultMessage: "Arrastra y suelta el archivo<br><span>Carga archivos: xlsx, csv, tamaño máximo 10 MB.</span>",
+        url: "controller/ajax/uploadInv.php",
+        paramName: "file",
+        maxFilesize: 10,
+        acceptedFiles: ".csv",
+        dictDefaultMessage: "Arrastra y suelta el archivo<br><span>Carga archivos: csv, tamaño máximo 10 MB.</span>",
         dictFallbackMessage: "Tu navegador no admite la carga de archivos mediante arrastrar y soltar.",
         dictFileTooBig: "El archivo es demasiado grande ({{filesize}} MB). Tamaño máximo permitido: {{maxFilesize}} MB.",
         dictInvalidFileType: "No puedes subir archivos de este tipo.",
@@ -70,5 +69,24 @@
         dictRemoveFileConfirmation: null,
         dictMaxFilesExceeded: "No puedes subir más archivos.",
         addRemoveLinks: true,
-    });
+	init: function() {
+		var submitButton = document.getElementById("register");
+		var idEvent = $('input[name="idEvent"]').val();
+		var myDropzone = this;
+
+		submitButton.addEventListener("click", function() {
+			myDropzone.processQueue();
+		});
+
+		this.on("sending", function(file, xhr, formData) {
+			// Añade el parámetro del evento al objeto formData aquí
+			formData.append("event", idEvent);
+		});
+
+		this.on("success", function(file, response) {
+			$('#tableEvents').DataTable().ajax.reload();
+		});
+	}
+});
+
 </script>
