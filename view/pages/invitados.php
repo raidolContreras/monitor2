@@ -69,6 +69,6 @@
         dictRemoveFile: "Eliminar archivo",
         dictRemoveFileConfirmation: null,
         dictMaxFilesExceeded: "No puedes subir más archivos.",
-        addRemoveLinks: true, // Agrega enlaces para eliminar archivos cargados
+        addRemoveLinks: true,
     });
 </script>
