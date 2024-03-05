@@ -15369,6 +15369,7 @@ body {
   cursor: pointer;
   transition: color 0.3s;
   font-weight: bold;
+  background-color: transparent;
 }
 
 .btn-activar { color: #189337; }
