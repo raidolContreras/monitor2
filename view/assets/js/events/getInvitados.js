@@ -60,10 +60,10 @@ $(document).ready(function() {
                 render: function(data) {
                     let colorIcon;
                     switch (data.color) {
-                        case 1:
+                        case '1':
                             colorIcon = 'red';
                             break;
-                        case 2:
+                        case '2':
                             colorIcon = '#FFA500'; // Amarillo oscuro
                             break;
                         default:
