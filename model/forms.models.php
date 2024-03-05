@@ -57,6 +57,7 @@ class FormsModel {
     }
     
     static public function mdlUploadInv($dato, $idEvent) {
+        $color = (strtolower($dato['color']) == 'rojo') ? 1 : ((strtolower($dato['color']) == 'amarillo') ? 2 : 0);
         print_r($dato);
         // Verifica que todos los datos necesarios estén presentes y no sean NULL
         foreach ($dato as $value) {
@@ -77,7 +78,7 @@ class FormsModel {
         $stmt->bindParam(':institucion', $dato['institucion'], PDO::PARAM_STR);
         $stmt->bindParam(':puesto', $dato['puesto'], PDO::PARAM_STR);
         $stmt->bindParam(':invitaciones', $dato['invitaciones'], PDO::PARAM_INT);
-        $stmt->bindParam(':color', $dato['color'], PDO::PARAM_INT);
+        $stmt->bindParam(':color', $color, PDO::PARAM_INT);
     
         if (!$stmt->execute()) {
             // Devuelve información sobre el error si la inserción falla
