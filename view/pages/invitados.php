@@ -34,7 +34,7 @@
 			</div>
 			<div class="modal-body">
 				<center>
-					<a class="btn-custom btn-editar mb-4" href="view/assets/docs/Plantilla de invitaciones a eventos.csv" download>Descargar plantilla</a>
+					<a class="btn-custom btn-editar mb-4" href="view/assets/docs/Plantilla de invitaciones a eventos.csv" download='Plantilla de invitaciones a eventos.csv' >Descargar plantilla</a>
 				</center>
 				<form class="registerInv">
 					<!-- Agrega un elemento div con el id myDropzone para Dropzone -->
