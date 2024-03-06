@@ -16,7 +16,8 @@
 				<th>Invitado</th>
 				<th>Institución</th>
 				<th>Puesto</th>
-				<th>Color</th>
+				<th>Sección</th>
+				<th>Estacionamiento</th>
 				<th>Anfitrión</th>
 				<th>Asistencia</th>
 			</thead>
