@@ -1,4 +1,7 @@
+var active = '';
 $(document).ready(function() {
+	
+	verificarEventosActivos();
 	$('#tableEvents').DataTable({
 		ajax: {
 			url: 'controller/ajax/getEvents.php',
@@ -29,25 +32,34 @@ $(document).ready(function() {
 				data: null,
 				render: function(data) {
 					if(data.statusEvent == 0){
-						return `
-						<center class="table-columns">
-							<button class="btn-custom btn-activar">Activar</button> | 
-							<button class="btn-custom btn-editar">Editar</button> | 
-							<button class="btn-custom btn-eliminar">Eliminar</button>
-						</center>
-						`;
+						if (active === 'ok'){
+							return `
+							<center class="table-columns"> 
+								<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Editar" data-type="2" data-name="${data.nameEvent}" data-date="${data.dateEvent}">Editar</button> | 
+								<button class="btn-custom btn-modal btn-eliminar" data-id="${data.idEvent}" data-title="Eliminar" data-type="3">Eliminar</button>
+							</center>
+							`;
+						} else {
+							return `
+							<center class="table-columns">
+								<button class="btn-custom btn-modal btn-activar" data-id="${data.idEvent}" data-title="Activar" data-type="1">Activar</button> | 
+								<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Editar" data-type="2" data-name="${data.nameEvent}" data-date="${data.dateEvent}">Editar</button> | 
+								<button class="btn-custom btn-modal btn-eliminar" data-id="${data.idEvent}" data-title="Eliminar" data-type="3">Eliminar</button>
+							</center>
+							`;
+						}
 					} else if (data.statusEvent == 1) {
 						return `
 						<center class="table-columns">
 							Activo | 
-							<button class="btn-custom btn-eliminar">Finalizar</button>
+							<button class="btn-custom btn-modal btn-eliminar" data-id="${data.idEvent}" data-title="Finalizar" data-type="4">Finalizar</button>
 						</center>
 						`;
 					} else {
 						return `
 						<center class="table-columns">
 							Terminado | 
-							<button class="btn-custom btn-editar">Ver asistencia</button>
+							<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Vel asistencia del" data-type="5">Ver asistencia</button>
 						</center>
 						`;
 					}
@@ -67,8 +79,7 @@ $(document).ready(function() {
 		],
 		"language": {
 			"url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-		},
-		"ordering": false
+		}
 	});
 
 	$("form.events").submit(function (event) {
@@ -101,6 +112,7 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
 });
 
 function clearForm(){
@@ -112,3 +124,95 @@ $(document).on('click', '.btn-invitados', function() {
     var eventId = $(this).data('idevent');
     window.location.href = 'invitados&event='+eventId; // Redirigir a la página de invitados
 });
+
+$(document).on('click', '.btn-modal', function() {
+    var eventId = $(this).data('id');
+    var title = $(this).data('title');
+    var type = $(this).data('type');
+    var content = generateModalContent(type, $(this), eventId);
+    
+    $('.titleEvent').text(`${title} evento`);
+    $('.contentModal').html(content);
+    $('#actionModal').modal('show');
+});
+
+function generateModalContent(type, button, eventId) {
+    switch (type) {
+        case 1:
+            return `¿Está seguro de que desea activar el evento? Esta acción permitirá la inscripción y visualización del evento por parte de los usuarios.
+				<Form id="modalForm">
+					<input type="hidden" value="${eventId}" name="activateEvent">
+				</form>
+		`;
+        case 2:
+            let name = button.data('name');
+            let date = button.data('date');
+            return `
+			<Form id="modalForm">
+                <label>Nombre del evento:</label>
+                <input type="text" class="form-control mb-2" value="${name}" name="editNameEvent">
+                <label>Fecha del evento:</label>
+                <input type="datetime-local" class="form-control" value="${date}" name="editDateEvent">
+                <input type="hidden" value="${eventId}" name="editEvent">
+			</form>
+            `;
+        case 3:
+            return `¿Está seguro de que desea eliminar el evento? Esta acción es irreversible y eliminará toda la información relacionada con el evento.
+				<Form id="modalForm">
+					<input type="hidden" value="${eventId}" name="deleteEvent">
+				</form>
+			`;
+        case 4:
+            return `¿Está seguro de que desea finalizar el evento? Esta acción marcará el evento como completado y no se podrán realizar más inscripciones.
+				<Form id="modalForm">
+					<input type="hidden" value="${eventId}" name="closeEvent">
+				</form>
+				`;
+        case 5:
+            return `¿Está seguro de que desea descargar la lista de asistencias del evento? Esto generará un archivo con los datos de los asistentes al evento.
+				<Form id="modalForm">
+                    <input type="hidden" value="${eventId}" name="downloadAttendanceList">
+				</form>
+            `;
+        default:
+            return 'Acción no reconocida. Por favor, intente de nuevo.';
+    }
+}
+
+$(document).on('click', '#modalAcceptButton', function() {
+    var formData = $('#modalForm').serialize();
+    $.ajax({
+        type: "POST",
+        url: "controller/ajax/ajax.form.php",
+        data: formData, 
+        success: function(response) {
+			verificarEventosActivos();
+			if (response !== 'Error') {
+				var content = `Evento ${response} con éxito.`
+				$('.resultModal').html(content);
+				$('#resultModal').modal('show');
+				$('#tableEvents').DataTable().ajax.reload();
+			}
+        },
+        error: function(error) {
+            // Maneja el error si es necesario
+            console.log("Error en la solicitud AJAX:", error);
+        }
+    });
+});
+
+function verificarEventosActivos() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: "controller/ajax/verificarEventosActivos.php",
+            success: function(response) {
+                active = response;
+            },
+            error: function(error) {
+                console.log("Error en la solicitud AJAX:", error);
+                reject(error);
+            }
+        });
+    });
+}

@@ -13,6 +13,30 @@ class FormsController {
         return FormsModel::mdlRegisterEvent($eventName, $dateEvent);
     }
 
+    static public function ctrDeleteEvent($idEvent) {
+        return FormsModel::mdlDeleteEvent($idEvent);
+    }
+
+    static public function ctrEditEvent($idEvent, $NameEvent, $DateEvent) {
+        return FormsModel::mdlEditEvent($idEvent, $NameEvent, $DateEvent);
+    }
+
+    static public function ctrCloseEvent($idEvent) {
+        return FormsModel::mdlCloseEvent($idEvent);
+    }
+
+    static public function ctrDownloadEvent($idEvent) {
+        return FormsModel::mdlDownloadEvent($idEvent);
+    }
+
+    static public function ctrActivateEvent($idEvent) {
+        return FormsModel::mdlActivateEvent($idEvent);
+    }
+
+    static public function ctrGetEventsActives() {
+        return FormsModel::mdlGetEventsActives();
+    }
+
     static public function ctrUploadInv($datos, $idEvent, $headers) {
         $results = [];
         foreach ($datos as $dato){

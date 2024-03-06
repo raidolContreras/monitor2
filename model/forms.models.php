@@ -88,6 +88,100 @@ class FormsModel {
     
         return $pdo->lastInsertId();
     }
+
+    static public function mdlDeleteEvent($idEvent) {
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('DELETE FROM unimo_events WHERE idEvent = :idEvent');
+            
+            $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                return 'eliminado';
+            } else {
+                return 'Error';
+            }
+        } catch (PDOException $e) {
+            error_log("Error al registrar el evento: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    static public function mdlEditEvent($idEvent, $nameEvent, $dateEvent) {
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('UPDATE unimo_events SET nameEvent=:nameEvent, dateEvent=:dateEvent where idEvent = :idEvent');
+            
+            $stmt->bindParam(':nameEvent', $nameEvent, PDO::PARAM_STR);
+            $stmt->bindParam(':dateEvent', $dateEvent, PDO::PARAM_STR);
+            $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                return 'actualizado';
+            } else {
+                return 'Error';
+            }
+        } catch (PDOException $e) {
+            error_log("Error al registrar el evento: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    static public function mdlCloseEvent($idEvent) {
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('UPDATE unimo_events SET statusEvent = 2 where idEvent = :idEvent');
+            
+            $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                return 'finalizado';
+            } else {
+                return 'Error';
+            }
+        } catch (PDOException $e) {
+            error_log("Error al registrar el evento: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    static public function mdlActivateEvent($idEvent) {
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('UPDATE unimo_events SET statusEvent = 1 where idEvent = :idEvent');
+            
+            $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                return 'activado';
+            } else {
+                return 'Error';
+            }
+        } catch (PDOException $e) {
+            error_log("Error al registrar el evento: " . $e->getMessage());
+            throw $e;
+        }
+    }
+    
+    static public function mdlGetEventsActives() {
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('SELECT * FROM unimo_events WHERE statusEvent = 1;');
+            
+            if ($stmt->execute() && $stmt->rowCount() > 0) {
+                return 'ok';
+            } else {
+                return 'false';
+            }
+        } catch (PDOException $e) {
+            error_log("Error al registrar el evento: " . $e->getMessage());
+            throw $e;
+        }
+    }    
+
+    static public function mdlDownloadEvent($idEvent) {
+        
+    }
     
     
 }

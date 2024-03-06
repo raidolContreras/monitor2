@@ -13,4 +13,14 @@ if (isset($_POST['function'])) {
             break;
         // Puedes agregar más casos para diferentes funciones
     }
+} else if (isset($_POST['deleteEvent'])) {
+    echo FormsController::ctrDeleteEvent($_POST['deleteEvent']);
+} else if (isset($_POST['editEvent'])) {
+    echo FormsController::ctrEditEvent($_POST['editEvent'], $_POST['editNameEvent'], $_POST['editDateEvent']);
+} else if (isset($_POST['closeEvent'])) {
+    echo FormsController::ctrCloseEvent($_POST['closeEvent']);
+} else if (isset($_POST['downloadAttendanceList'])) {
+    echo FormsController::ctrDownloadEvent($_POST['downloadAttendanceList']);
+} else if (isset($_POST['activateEvent'])) {
+    echo FormsController::ctrActivateEvent($_POST['activateEvent']);
 }
