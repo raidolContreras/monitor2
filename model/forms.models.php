@@ -199,6 +199,25 @@ class FormsModel {
             throw $e;
         }
     }
+
+    static public function mdlRegisterAssist($enviarAsistencia, $nInvitados) {
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('UPDATE unimo_invitados SET invitados = :nInvitados, statusInvitado = 1 where idInvitado = :idInvitado');
+            
+            $stmt->bindParam(':idInvitado', $enviarAsistencia, PDO::PARAM_INT);
+            $stmt->bindParam(':nInvitados', $nInvitados, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                return 'ok';
+            } else {
+                return 'Error';
+            }
+        } catch (PDOException $e) {
+            error_log("Error al registrar el evento: " . $e->getMessage());
+            throw $e;
+        }
+    }
     
     
 }

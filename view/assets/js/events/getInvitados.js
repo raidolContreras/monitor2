@@ -105,8 +105,8 @@ $(document).ready(function() {
                     if (data.statusInvitado == 0) {
                         return `
                             <center class="table-columns row" style="justify-content: center;">
-                                <button class="btn-circle-success"><i class="fas fa-check"></i></button>
-                                <button class="btn-circle-danger"><i class="fas fa-times"></i></button>
+                                <button class="btn-circle-success" onClick="aceptar(`+data.idInvitado+`)"><i class="fas fa-check"></i></button>
+                                <button class="btn-circle-danger" onClick="rechazar(`+data.idInvitado+`)"><i class="fas fa-times"></i></button>
                             </center>
                         `;
                     } else if (data.statusInvitado == 1) {
@@ -159,3 +159,21 @@ $(document).ready(function() {
     });
 });
 
+function aceptar(id){
+    var content = `
+        <Form id="modalForm">
+            <label>N° de invitados</label>
+            <input type="number" class="form-control mb-2" value="1" min="1" name="nInvitados">
+            <input type="hidden" name="enviarAsistencia" value="${id}">
+            <input type="hidden" name="function" value="3">
+        </form>
+    `;
+    
+    $('.titleEvent').text(`Aceptar Invitado`);
+    $('.contentModal').html(content);
+    $('#actionModal').modal('show');
+}
+
+function rechazar($id){
+    console.log($id);
+}

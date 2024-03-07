@@ -179,28 +179,6 @@ function generateModalContent(type, button, eventId) {
     }
 }
 
-$(document).on('click', '#modalAcceptButton', function() {
-    var formData = $('#modalForm').serialize();
-    $.ajax({
-        type: "POST",
-        url: "controller/ajax/ajax.form.php",
-        data: formData, 
-        success: function(response) {
-			verificarEventosActivos();
-			if (response !== 'Error') {
-				var content = `Evento ${response} con éxito.`
-				$('.resultModal').html(content);
-				$('#resultModal').modal('show');
-				$('#tableEvents').DataTable().ajax.reload();
-			}
-        },
-        error: function(error) {
-            // Maneja el error si es necesario
-            console.log("Error en la solicitud AJAX:", error);
-        }
-    });
-});
-
 function verificarEventosActivos() {
     return new Promise((resolve, reject) => {
         $.ajax({

@@ -54,4 +54,9 @@ class FormsController {
     static public function ctrSearchUsers($email){
         return FormsModel::mdlSearchUsers($email);
     }
+
+    static public function ctrRegisterAssist($enviarAsistencia, $nInvitados){
+        return FormsModel::mdlRegisterAssist($enviarAsistencia, $nInvitados);
+    }
+
 }
