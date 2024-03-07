@@ -26,7 +26,12 @@ class FormsModel {
     static public function mdlGetInvitados($idEvent){
         try {
             $pdo = Conexion::conectar();
-            $stmt = $pdo->prepare('SELECT * FROM unimo_invitados WHERE idEvent = :idEvent');
+            $stmt = $pdo->prepare('
+            SELECT i.*, e.statusEvent
+                FROM unimo_invitados i
+                left JOIN unimo_events e ON e.idEvent = i.idEvent
+            WHERE i.idEvent = :idEvent
+            ');
             $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
     
             $stmt->execute();
