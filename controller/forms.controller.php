@@ -59,4 +59,8 @@ class FormsController {
         return FormsModel::mdlRegisterAssist($enviarAsistencia, $nInvitados);
     }
 
+    static public function ctrMarkAssist($idInvitado){
+        return FormsModel::mdlMarkAssist($idInvitado);
+    }
+
 }

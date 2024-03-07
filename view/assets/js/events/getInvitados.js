@@ -162,18 +162,28 @@ $(document).ready(function() {
 function aceptar(id){
     var content = `
         <Form id="modalForm">
-            <label>N° de invitados</label>
+            <label for="nInvitados">Número de invitados:</label>
             <input type="number" class="form-control mb-2" value="1" min="1" name="nInvitados">
             <input type="hidden" name="enviarAsistencia" value="${id}">
             <input type="hidden" name="function" value="3">
         </form>
     `;
     
-    $('.titleEvent').text(`Aceptar Invitado`);
+    $('.titleEvent').text(`Confirmación de Asistencia`);
     $('.contentModal').html(content);
     $('#actionModal').modal('show');
 }
 
-function rechazar($id){
-    console.log($id);
+function rechazar(id){
+    var content = `
+    <p>¿Está seguro de que desea marcar como ausente a este invitado?</p>
+        <Form id="modalForm">
+            <input type="hidden" name="marcarAusente" value="${id}">
+            <input type="hidden" name="function" value="4">
+        </form>
+    `;
+    
+    $('.titleEvent').text(`Marcar como Ausente`);
+    $('.contentModal').html(content);
+    $('#actionModal').modal('show');
 }

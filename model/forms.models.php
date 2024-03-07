@@ -218,6 +218,24 @@ class FormsModel {
             throw $e;
         }
     }
+
+    static public function mdlMarkAssist($idInvitado) {
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('UPDATE unimo_invitados SET statusInvitado = 2 where idInvitado = :idInvitado');
+            
+            $stmt->bindParam(':idInvitado', $idInvitado, PDO::PARAM_INT);
+            
+            if ($stmt->execute()) {
+                return 'ok';
+            } else {
+                return 'Error';
+            }
+        } catch (PDOException $e) {
+            error_log("Error al registrar el evento: " . $e->getMessage());
+            throw $e;
+        }
+    }
     
     
 }

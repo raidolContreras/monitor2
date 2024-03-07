@@ -20,7 +20,10 @@ if (isset($_POST['function'])) {
             // Llama a la función que maneja el registro de eventos
             echo FormsController::ctrRegisterAssist($_POST['enviarAsistencia'], $_POST['nInvitados']);
             break;
-        // Puedes agregar más casos para diferentes funciones
+        case 4:
+            // Llama a la función que maneja el registro de eventos
+            echo FormsController::ctrMarkAssist($_POST['marcarAusente']);
+            break;
     }
 
 } else if (isset($_POST['deleteEvent'])) {
