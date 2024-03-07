@@ -1,4 +1,4 @@
-<script src="view/assets/js/bootstrap.bundle.min.js"></script>
+
 <script src="view/assets/vendor/Datatables/datatables.js"></script>
 <!-- Elimina esta línea ya que Popper.js viene incluido con Bootstrap Bundle -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
@@ -25,4 +25,23 @@ $(document).ready(function() {
     });
 
 });
+
+function logout() {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/logout.php',
+        success: function(response) {
+            if (response === 'ok') {
+                window.location.href = 'login';
+            } else {
+                alert('Error al intentar cerrar sesión. Inténtalo de nuevo más tarde.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al cerrar sesión:', error);
+            alert('Hubo un error al intentar cerrar sesión. Inténtalo de nuevo más tarde.');
+        }
+    });
+}
+
 </script>

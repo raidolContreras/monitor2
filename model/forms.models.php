@@ -182,6 +182,23 @@ class FormsModel {
     static public function mdlDownloadEvent($idEvent) {
         
     }
+
+    static public function mdlSearchUsers($email) {
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('SELECT * FROM unimo_users WHERE email = :email');
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            
+            if ($stmt->execute() && $stmt->rowCount() > 0) {
+                return $stmt->fetch();
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            error_log("Error al registrar el evento: " . $e->getMessage());
+            throw $e;
+        }
+    }
     
     
 }

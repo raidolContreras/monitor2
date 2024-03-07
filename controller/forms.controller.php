@@ -50,4 +50,8 @@ class FormsController {
         }
         return $results;
     }
+
+    static public function ctrSearchUsers($email){
+        return FormsModel::mdlSearchUsers($email);
+    }
 }

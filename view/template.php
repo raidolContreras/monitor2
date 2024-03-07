@@ -21,8 +21,8 @@ session_start();
 <body>
 	
 	<?php include "config/whiteList.php"; ?>
-
-<?php include "js.php"; ?>
+    
+<script src="view/assets/js/bootstrap.bundle.min.js"></script>
 <script>
 	
     function closeMenu() {

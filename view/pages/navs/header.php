@@ -10,10 +10,13 @@
 				<span class="navbar-toggler-icon three"></span>
 			</button>
 			<div class="navbar-collapse" id="navbarNav">
-          		<span class="close-btn" onclick="closeMenu()">&times;</span>
+				<span class="close-btn" onclick="closeMenu()">&times;</span>
 				<ul class="navbar-nav">
 					<li class="nav-item mt-5">
-						<h4>Administrador</h4>
+						<?php echo $_SESSION['level'] ?>
+						<h5>
+							<?php echo $_SESSION['name'] ?>
+						</h5>
 					</li>
 					<li class="nav-item mt-1">
 						<button class="nav-link px-3" data-bs-toggle="modal" data-bs-target="#newUserModal">
@@ -21,7 +24,7 @@
 						</button>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link px-3" href="#">
+						<a class="nav-link px-3" href="" onclick="logout()">
 							<i class="fas fa-sign-out-alt"></i> Cerrar sesión
 						</a>
 					</li>
