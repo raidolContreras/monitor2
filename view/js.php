@@ -52,11 +52,6 @@ $(document).on('click', '#modalAcceptButton', function() {
         data: formData, 
         success: function(response) {
 			verificarEventosActivos();
-			if (response !== 'Error') {
-				var content = `Evento ${response} con éxito.`
-				$('.resultModal').html(content);
-				$('#resultModal').modal('show');
-			}
         },
         error: function(error) {
             // Maneja el error si es necesario
@@ -66,4 +61,20 @@ $(document).on('click', '#modalAcceptButton', function() {
     
     $('#tableEvents').DataTable().ajax.reload();
 });
+
+function verificarEventosActivos() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: "controller/ajax/verificarEventosActivos.php",
+            success: function(response) {
+                active = response;
+            },
+            error: function(error) {
+                console.log("Error en la solicitud AJAX:", error);
+                reject(error);
+            }
+        });
+    });
+}
 </script>

@@ -178,19 +178,3 @@ function generateModalContent(type, button, eventId) {
             return 'Acción no reconocida. Por favor, intente de nuevo.';
     }
 }
-
-function verificarEventosActivos() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "GET",
-            url: "controller/ajax/verificarEventosActivos.php",
-            success: function(response) {
-                active = response;
-            },
-            error: function(error) {
-                console.log("Error en la solicitud AJAX:", error);
-                reject(error);
-            }
-        });
-    });
-}
