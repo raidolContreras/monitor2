@@ -18,10 +18,10 @@
 							<?php echo $_SESSION['name'] ?>
 						</h5>
 					</li>
-					<li class="nav-item mt-1">
-						<button class="nav-link px-3" data-bs-toggle="modal" data-bs-target="#newUserModal">
+					<li class="nav-item">
+						<a class="nav-link px-3" href="" data-bs-toggle="modal" data-bs-target="#newUserModal">
 							<i class="fas fa-user-plus"></i> Nuevo usuario
-						</button>
+						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link px-3" href="" onclick="logout()">
