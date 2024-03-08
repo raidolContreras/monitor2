@@ -18,7 +18,7 @@
 							<?php echo $_SESSION['name'] ?>
 						</h5>
 					</li>
-					<?php if($_SESSION['level'] == 1): ?>
+					<?php if($_SESSION['level'] == '1'): ?>
 					<li class="nav-item">
 						<a class="nav-link px-3" href="" data-bs-toggle="modal" data-bs-target="#newUserModal">
 							<i class="fas fa-user-plus"></i> Nuevo usuario
