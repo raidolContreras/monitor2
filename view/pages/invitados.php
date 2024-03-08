@@ -1,7 +1,8 @@
-<?php if ($_SESSION['level'] != '1'){
-	header("Location: inicio");
-	exit();
-} ?>
+<?php if ($_SESSION['level'] == '2'): ?>
+	<script>
+		window.location.href = "./";
+	</script>
+<?php else: ?>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 
@@ -94,3 +95,4 @@
 	}
 });
 </script>
+<?php endif ?>
