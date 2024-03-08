@@ -9,19 +9,15 @@ if (isset($_POST['function'])) {
 
     switch ($_POST['function']) {
         case 1:
-            // Llama a la función que maneja el registro de eventos
             echo FormsController::ctrRegisterEvent($_POST['eventName'], $_POST['dateEvent']);
             break;
         case 2:
-            // Llama a la función que maneja el registro de eventos
-            // echo FormsController::ctrRegisterEvent($_POST['eventName'], $_POST['dateEvent']);
-            // break;
+            echo FormsController::ctrRegisterUser($_POST['userName'], $_POST['email'], $_POST['password'], $_POST['level']);
+            break;
         case 3:
-            // Llama a la función que maneja el registro de eventos
             echo FormsController::ctrRegisterAssist($_POST['enviarAsistencia'], $_POST['nInvitados']);
             break;
         case 4:
-            // Llama a la función que maneja el registro de eventos
             echo FormsController::ctrMarkAssist($_POST['marcarAusente']);
             break;
     }

@@ -63,4 +63,10 @@ class FormsController {
         return FormsModel::mdlMarkAssist($idInvitado);
     }
 
+    static public function ctrRegisterUser($name, $email, $password, $level){
+        
+        $cryptPassword = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+        return FormsModel::mdlRegisterUser($name, $email, $cryptPassword, $level);
+    }
+
 }

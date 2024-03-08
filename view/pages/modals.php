@@ -19,8 +19,9 @@
 							<option value="2">Usuario general</option>
 						</select>
 					</form>
+					<div class="message"></div>
 					<div class="center-buttons mt-4">
-						<button type="button" class="btn btn-primary mx-1">Registrar</button>
+						<button type="button" class="btn btn-primary mx-1" id="newUser">Registrar</button>
 						<button type="button" class="btn btn-danger mx-1" data-bs-dismiss="modal">Cancelar</button>
 					</div>
 				</div>

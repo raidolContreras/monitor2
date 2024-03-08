@@ -1,5 +1,6 @@
 
 <script src="view/assets/vendor/Datatables/datatables.js"></script>
+<script src="view/assets/js/events/addUser.js"></script>
 <!-- Elimina esta línea ya que Popper.js viene incluido con Bootstrap Bundle -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
 

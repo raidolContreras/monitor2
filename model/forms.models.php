@@ -241,5 +241,26 @@ class FormsModel {
             throw $e;
         }
     }
+    
+    static public function mdlRegisterUser($name, $email, $cryptPassword, $level) {
+        $pdo = Conexion::conectar();
+        $stmt = $pdo->prepare("INSERT INTO unimo_users (name, email, password, level) VALUES (:name, :email, :password, :level)");
+        
+        // Asegúrate de que $dato contenga los valores en el orden correcto
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $cryptPassword, PDO::PARAM_STR);
+        $stmt->bindParam(':level', $level, PDO::PARAM_INT);
+    
+        if (!$stmt->execute()) {
+            // Devuelve información sobre el error si la inserción falla
+            $errorInfo = $stmt->errorInfo();
+            return 'Error al insertar en la base de datos: ' . $errorInfo[2];
+        } else {
+            return 'ok';
+        }
+    
+        return $pdo->lastInsertId();
+    }
 
 }
