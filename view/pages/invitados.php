@@ -1,3 +1,5 @@
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
 <?php if ($_SESSION['level'] == '2'): ?>
 	<script>
 		window.location.href = "./";
@@ -12,7 +14,7 @@
             <strong id="evento"></strong>
         </div>
     </div>
-
+	<button id="sheetjsexport" class="btn btn-primary mb-3">Exportar excel</button>
     <button class="btn btn-primary mb-3 float-end" data-bs-toggle="modal" data-bs-target="#invitadosModal">Registrar invitados</button>
 	
 	<div>
@@ -94,5 +96,40 @@
 		});
 	}
 });
+
+
+document.getElementById("sheetjsexport").addEventListener('click', function() {
+    /* Crear hoja de cálculo a partir de la tabla HTML */
+    var wb = XLSX.utils.table_to_book(document.getElementById("tableEvents"), {
+      sheet: "Invitados", // Nombre de la hoja en el archivo Excel
+      display: true, // Mostrar celdas en negrita y en cursiva
+      /* Estilo personalizado para la hoja de cálculo */
+      styles: {
+        /* Estilo de la tabla */
+        table: {
+          background: '#ffffff', // Color de fondo de la tabla
+          font: { color: "#333333" } // Color del texto
+        },
+        /* Estilo de las celdas del encabezado */
+        th: {
+          background: '#4CAF50', // Color de fondo del encabezado
+          color: "#ffffff", // Color del texto del encabezado
+          font: { bold: true }, // Negrita para el encabezado
+          border: "1px solid #dddddd", // Borde de las celdas del encabezado
+          textAlign: "center" // Alineación del texto en el encabezado
+        },
+        /* Estilo de las celdas de datos */
+        td: {
+          background: '#ffffff', // Color de fondo de las celdas de datos
+          color: "#333333", // Color del texto de las celdas de datos
+          font: { italic: false }, // Cursiva para las celdas de datos
+          border: "1px solid #dddddd", // Borde de las celdas de datos
+          textAlign: "center" // Alineación del texto en las celdas de datos
+        }
+      }
+    });
+    /* Exportar a un archivo (iniciar la descarga) */
+    XLSX.writeFile(wb, "Invitados.xlsx");
+  });
 </script>
 <?php endif ?>
