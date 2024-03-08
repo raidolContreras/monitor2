@@ -85,7 +85,7 @@ class FormsModel {
         }
     
         $pdo = Conexion::conectar();
-        $stmt = $pdo->prepare("INSERT INTO unimo_invitados (idEvent, firstname, lastname, anfitrion, institucion, puesto, invitaciones, color) VALUES (:idEvent, :firstname, :lastname, :anfitrion, :institucion, :puesto, :invitaciones, :color)");
+        $stmt = $pdo->prepare("INSERT INTO unimo_invitados (idEvent, firstname, lastname, anfitrion, institucion, puesto, estacionamiento, color) VALUES (:idEvent, :firstname, :lastname, :anfitrion, :institucion, :puesto, :estacionamiento, :color)");
         
         // Asegúrate de que $dato contenga los valores en el orden correcto
         $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
@@ -94,7 +94,7 @@ class FormsModel {
         $stmt->bindParam(':anfitrion', $dato['anfitrion'], PDO::PARAM_STR);
         $stmt->bindParam(':institucion', $dato['institucion'], PDO::PARAM_STR);
         $stmt->bindParam(':puesto', $dato['puesto'], PDO::PARAM_STR);
-        $stmt->bindParam(':invitaciones', $dato['invitaciones'], PDO::PARAM_INT);
+        $stmt->bindParam(':estacionamiento', $dato['estacionamiento'], PDO::PARAM_STR);
         $stmt->bindParam(':color', $color, PDO::PARAM_INT);
     
         if (!$stmt->execute()) {

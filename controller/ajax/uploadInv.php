@@ -3,7 +3,7 @@
 require_once "../forms.controller.php";
 require_once "../../model/forms.models.php";
 
-$expectedHeaders = ['firstname', 'lastname', 'anfitrion', 'institucion', 'puesto', 'invitaciones', 'color'];
+$expectedHeaders = ['firstname', 'lastname', 'anfitrion', 'institucion', 'puesto', 'estacionamiento', 'color'];
 
 if (!empty($_FILES) && isset($_POST['event'])) {
     $file = $_FILES['file']['tmp_name'];
