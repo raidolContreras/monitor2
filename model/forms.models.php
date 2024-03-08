@@ -22,6 +22,18 @@ class FormsModel {
             throw $e;
         }
     }
+    static public function mdlGetEventActive(){
+        try {
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare('SELECT * FROM unimo_events WHERE statusEvent = 1');
+
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error en la consulta SQL: " . $e->getMessage());
+            throw $e;
+        }
+    }
     
     static public function mdlGetInvitados($idEvent){
         try {

@@ -4,6 +4,9 @@ class FormsController {
     static public function ctrGetEvents($idEvent) {
         return FormsModel::mdlGetEvents($idEvent);
     }
+    static public function ctrGetEventActive() {
+        return FormsModel::mdlGetEventActive();
+    }
     
     static public function ctrGetInvitados($idEvent) {
         return FormsModel::mdlGetInvitados($idEvent);

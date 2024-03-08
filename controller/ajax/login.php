@@ -17,7 +17,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 				$_SESSION['logged'] = true;
 				$_SESSION['email'] = $users['email'];
 				$_SESSION['name'] = $users['name'];
-				$_SESSION['level'] = ($users['level'] == 1) ? 'Administrador' : 'Colaborador';
+				$_SESSION['level'] = $users['level'];
+				$_SESSION['levelName'] = ($users['level'] == 1) ? 'Administrador' : 'Colaborador';
 				echo 'ok';
 			} else {
 				echo 'status';

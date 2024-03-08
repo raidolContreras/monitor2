@@ -1,14 +1,16 @@
 $(document).ready(function() {
-    var idEvent = $('input[name="idEvent"]').val();
     $.ajax({
         type: 'POST',
-        url: 'controller/ajax/getEvents.php',
-        data: {'event': idEvent},
+        url: 'controller/ajax/getEventActive.php',
         dataType: 'json',
         success: function(response) {
             // Verifica si la respuesta tiene la propiedad 'nameEvent'
             if (response.hasOwnProperty('nameEvent')) {
                 $('#evento').text(response.nameEvent); // Actualiza el contenido del elemento con el ID 'evento'
+                $('input[name="idEvent"]').val(response.idEvent);
+
+                // Configurar DataTables y obtener invitados después de obtener el evento activo
+                setupDataTables(response.idEvent);
             }
         },
         error: function(xhr, status, error) {
@@ -16,6 +18,35 @@ $(document).ready(function() {
         }
     });
 
+    $("form.events").submit(function (event) {
+        event.preventDefault();
+        var eventName = $("input[name='eventName']").val();
+        var dateEvent = $("input[name='dateEvent']").val();
+        
+        $.ajax({
+            type: "POST",
+            url: "controller/ajax/ajax.form.php",
+            data: {
+                function: 2,
+                eventName: eventName,
+                dateEvent: dateEvent,
+            },
+            success: function (response) {                
+                if (response === 'ok') {
+                    clearForm();
+                    $('#tableEvents').DataTable().ajax.reload();
+                } else {
+                    
+                }
+            },
+            error: function (error) {
+                console.log("Error en la solicitud Ajax:", error);
+            }
+        });
+    });
+});
+
+function setupDataTables(idEvent) {
     $('#tableEvents').DataTable({
         ajax: {
             type: 'POST',
@@ -103,20 +134,12 @@ $(document).ready(function() {
                 data: null,
                 render: function(data) {
                     if (data.statusInvitado == 0) {
-                        if (data.statusEvent == 1){
-                            return `
-                                <center class="table-columns row" style="justify-content: center;">
-                                    <button class="btn-circle-success" onClick="aceptar(`+data.idInvitado+`)"><i class="fas fa-check"></i></button>
-                                    <button class="btn-circle-danger" onClick="rechazar(`+data.idInvitado+`)"><i class="fas fa-times"></i></button>
-                                </center>
-                            `;
-                        } else {
-                            return `
-                                <center class="table-columns row" style="justify-content: center;">
-                                    
-                                </center>
-                            `;
-                        }
+                        return `
+                            <center class="table-columns row" style="justify-content: center;">
+                                <button class="btn-circle-success" onClick="aceptar(`+data.idInvitado+`)"><i class="fas fa-check"></i></button>
+                                <button class="btn-circle-danger" onClick="rechazar(`+data.idInvitado+`)"><i class="fas fa-times"></i></button>
+                            </center>
+                        `;
                     } else if (data.statusInvitado == 1) {
                         return `
                             <center class="table-columns">
@@ -137,34 +160,7 @@ $(document).ready(function() {
             "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
         }
     });
-
-    $("form.events").submit(function (event) {
-        event.preventDefault();
-        var eventName = $("input[name='eventName']").val();
-        var dateEvent = $("input[name='dateEvent']").val();
-        
-        $.ajax({
-            type: "POST",
-            url: "controller/ajax/ajax.form.php",
-            data: {
-                function: 2,
-                eventName: eventName,
-                dateEvent: dateEvent,
-            },
-            success: function (response) {                
-                if (response === 'ok') {
-                    clearForm();
-                    $('#tableEvents').DataTable().ajax.reload();
-                } else {
-                    
-                }
-            },
-            error: function (error) {
-                console.log("Error en la solicitud Ajax:", error);
-            }
-        });
-    });
-});
+}
 
 function aceptar(id){
     var content = `
@@ -195,8 +191,6 @@ function rechazar(id){
     $('#actionModal').modal('show');
 }
 
-
-    // Ejecutar la recarga de datos de DataTables cada minuto
-    setInterval(function() {
-        $('#tableEvents').DataTable().ajax.reload();
-    }, 60000); // 60000 milisegundos = 1 minuto
+setInterval(function() {
+    $('#tableEvents').DataTable().ajax.reload();
+}, 30000);

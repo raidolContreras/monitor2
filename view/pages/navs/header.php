@@ -13,16 +13,18 @@
 				<span class="close-btn" onclick="closeMenu()">&times;</span>
 				<ul class="navbar-nav">
 					<li class="nav-item mt-5">
-						<?php echo $_SESSION['level'] ?>
+						<?php echo $_SESSION['levelName'] ?>
 						<h5>
 							<?php echo $_SESSION['name'] ?>
 						</h5>
 					</li>
+					<?php if($_SESSION['level'] == 1): ?>
 					<li class="nav-item">
 						<a class="nav-link px-3" href="" data-bs-toggle="modal" data-bs-target="#newUserModal">
 							<i class="fas fa-user-plus"></i> Nuevo usuario
 						</a>
 					</li>
+					<?php endif ?>
 					<li class="nav-item">
 						<a class="nav-link px-3" href="" onclick="logout()">
 							<i class="fas fa-sign-out-alt"></i> Cerrar sesión
