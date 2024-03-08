@@ -19,5 +19,5 @@
 		</table>
 	</div>
 </main>
-<input type="hidden" name="idEvent" value="<?php echo $_GET['event'] ?>">
-<script src="view\assets\js\events\getInvitados.js"></script>
+<input type="hidden" name="idEvent">
+<script src="view\assets\js\events\getEventActive.js"></script>

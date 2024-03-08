@@ -194,9 +194,6 @@ function rechazar(id){
     $('.contentModal').html(content);
     $('#actionModal').modal('show');
 }
-
-
-    // Ejecutar la recarga de datos de DataTables cada minuto
     setInterval(function() {
         $('#tableEvents').DataTable().ajax.reload();
-    }, 60000); // 60000 milisegundos = 1 minuto
+    }, 30000);
