@@ -1,5 +1,5 @@
 <?php if ($_SESSION['level'] != '1'){
-	header("Location: /");
+	header("Location: ./");
 	exit();
 } ?>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
