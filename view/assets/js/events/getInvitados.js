@@ -120,7 +120,7 @@ $(document).ready(function() {
                     } else if (data.statusInvitado == 1) {
                         return `
                             <center class="table-columns">
-                                Presente
+                                Presente (${data.invitados})
                             </center>
                         `;
                     } else {
