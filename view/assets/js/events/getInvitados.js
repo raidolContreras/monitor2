@@ -123,8 +123,6 @@ $(document).ready(function() {
         }
         
     });
-    
-    obtenerEvento(idEvent);
 
     $("form.events").submit(function (event) {
         event.preventDefault();
@@ -231,4 +229,5 @@ function obtenerEvento(idEvent) {
     });
 }
 
+obtenerEvento(idEvent);
 setInterval(obtenerEvento, 60000);
