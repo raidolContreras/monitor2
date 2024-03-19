@@ -1,5 +1,5 @@
+var idEvent = $('input[name="idEvent"]').val();
 $(document).ready(function() {
-    var idEvent = $('input[name="idEvent"]').val();
 
     $('#tableEvents').DataTable({
         ajax: {
