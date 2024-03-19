@@ -231,4 +231,4 @@ function obtenerEvento(idEvent) {
     });
 }
 
-setInterval(obtenerEvento, 60000);
+setInterval(obtenerEvento($('input[name="idEvent"]').val()), 60000);
