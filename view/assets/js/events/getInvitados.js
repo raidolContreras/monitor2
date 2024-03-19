@@ -13,6 +13,8 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function(data) {
+                    
+                    obtenerEvento(idEvent);
                     return `
                         <center class="table-columns">
                             ${data.lastname} ${data.firstname}
@@ -229,5 +231,4 @@ function obtenerEvento(idEvent) {
     });
 }
 
-obtenerEvento(idEvent);
 setInterval(obtenerEvento, 60000);
