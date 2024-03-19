@@ -1,4 +1,11 @@
 <?php 
+
+require_once __DIR__ . '/../view/assets/vendor/PHP/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 include "conection.php";
 
 class FormsModel {
@@ -199,7 +206,43 @@ class FormsModel {
     }    
 
     static public function mdlDownloadEvent($idEvent) {
+        $registros = FormsModel::mdlGetInvitados($idEvent);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
         
+        // Definir los títulos de las columnas
+        $titles = ['ID Invitado', 'ID Evento', 'Nombre', 'Apellidos', 'Email', 'Anfitrión', 'Institución', 'Puesto', 'Color', 'Invitados', 'Estacionamiento', 'Estado del Invitado'];
+        $column = 'A';
+        foreach ($titles as $title) {
+            $sheet->setCellValue($column.'1', $title);
+            $column++;
+        }
+
+        // Llenar el Excel con los datos
+        $row = 2;
+        foreach ($registros as $registro) {
+            $sheet->setCellValue('A'.$row, $registro['idInvitado']);
+            $sheet->setCellValue('B'.$row, $registro['idEvent']);
+            $sheet->setCellValue('C'.$row, $registro['firstname']);
+            $sheet->setCellValue('D'.$row, $registro['lastname']);
+            $sheet->setCellValue('E'.$row, $registro['email']);
+            $sheet->setCellValue('F'.$row, $registro['anfitrion']);
+            $sheet->setCellValue('G'.$row, $registro['institucion']);
+            $sheet->setCellValue('H'.$row, $registro['puesto']);
+            $sheet->setCellValue('I'.$row, $registro['color']);
+            $sheet->setCellValue('J'.$row, $registro['invitados']);
+            $sheet->setCellValue('K'.$row, $registro['estacionamiento']);
+            $sheet->setCellValue('L'.$row, $registro['statusInvitado']);
+            $row++;
+        }
+
+        // Generar el archivo de Excel
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+
+        // Forzar la descarga del archivo
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="lista_invitados.xlsx"');
+        $writer->save('php://output');
     }
 
     static public function mdlSearchUsers($email) {
