@@ -221,6 +221,7 @@ function obtenerEvento(idEvent) {
             if (response.hasOwnProperty('nameEvent')) {
                 $('#evento').text(response.nameEvent);
                 $('.invitados .dt-column-title').html(response.nInvitados + ' invitados');
+                console.log(response.nInvitados);
             }
         },
         error: function(xhr, status, error) {
