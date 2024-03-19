@@ -130,11 +130,13 @@ $(document).on('click', '.btn-modal', function() {
     var title = $(this).data('title');
     var type = $(this).data('type');
     var content = generateModalContent(type, $(this), eventId);
+
+        $('.titleEvent').text(`${title} evento`);
+        $('.contentModal').html(content);
+        $('#actionModal').modal('show');
     
-    $('.titleEvent').text(`${title} evento`);
-    $('.contentModal').html(content);
-    $('#actionModal').modal('show');
 });
+
 
 function generateModalContent(type, button, eventId) {
     switch (type) {

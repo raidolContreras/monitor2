@@ -4,7 +4,12 @@ require_once __DIR__ . '/../view/assets/vendor/PHP/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+
 
 include "conection.php";
 
@@ -209,40 +214,103 @@ class FormsModel {
         $registros = FormsModel::mdlGetInvitados($idEvent);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        
+    
+        // Insertar el logo dentro de una casilla
+        $logoPath = __DIR__ . '/../view/assets/images/logo-color.png'; // Ruta al archivo del logo
+        $logoCoordinate = 'A1'; // Coordenada donde se colocará el logo
+        $sheet->mergeCells($logoCoordinate . ':I3'); // Fusionar celdas para el logo
+        $sheet->setCellValue($logoCoordinate, ''); // Establecer valor vacío en la celda para el logo
+        $objDrawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $objDrawing->setName('Logo');
+        $objDrawing->setDescription('Logo');
+        $objDrawing->setPath($logoPath);
+        $objDrawing->setOffsetX(15); // Margen horizontal de 15 unidades
+        $objDrawing->setHeight(55); // Establecer la altura del logo para que ocupe el espacio de las tres filas
+        $objDrawing->setCoordinates($logoCoordinate);
+        $objDrawing->setWorksheet($sheet);
+    
         // Definir los títulos de las columnas
-        $titles = ['ID Invitado', 'ID Evento', 'Nombre', 'Apellidos', 'Email', 'Anfitrión', 'Institución', 'Puesto', 'Color', 'Invitados', 'Estacionamiento', 'Estado del Invitado'];
+        $titles = [
+            'Nombre', 'Apellidos', 'Anfitrión', 
+            'Institución', 'Puesto', 'Color', 'Estacionamiento', 
+            'Estado del Invitado', 'Asistentes'
+        ];
         $column = 'A';
         foreach ($titles as $title) {
-            $sheet->setCellValue($column.'1', $title);
+            $sheet->setCellValue($column.'4', $title); // Se cambió la fila a 4 para dejar espacio para el logo
             $column++;
         }
-
+    
         // Llenar el Excel con los datos
-        $row = 2;
+        $row = 5; // Se cambió la fila a 5 para dejar espacio para el logo
+        $tInvitados = 0;
         foreach ($registros as $registro) {
-            $sheet->setCellValue('A'.$row, $registro['idInvitado']);
-            $sheet->setCellValue('B'.$row, $registro['idEvent']);
-            $sheet->setCellValue('C'.$row, $registro['firstname']);
-            $sheet->setCellValue('D'.$row, $registro['lastname']);
-            $sheet->setCellValue('E'.$row, $registro['email']);
-            $sheet->setCellValue('F'.$row, $registro['anfitrion']);
-            $sheet->setCellValue('G'.$row, $registro['institucion']);
-            $sheet->setCellValue('H'.$row, $registro['puesto']);
-            $sheet->setCellValue('I'.$row, $registro['color']);
-            $sheet->setCellValue('J'.$row, $registro['invitados']);
-            $sheet->setCellValue('K'.$row, $registro['estacionamiento']);
-            $sheet->setCellValue('L'.$row, $registro['statusInvitado']);
+    
+            if ($registro['color'] == 0) {
+                $color = 'Verde';
+            } elseif ($registro['color'] == 1) {
+                $color = 'Amarillo';
+            } else {
+                $color = 'Rojo';
+            }
+    
+            $tInvitados += $registro['invitados'];
+            $invitados = ($registro['invitados'] === null) ? 0 : $registro['invitados'];
+    
+            $sheet->setCellValue('A'.$row, $registro['firstname']);
+            $sheet->setCellValue('B'.$row, $registro['lastname']);
+            $sheet->setCellValue('C'.$row, $registro['anfitrion']);
+            $sheet->setCellValue('D'.$row, $registro['institucion']);
+            $sheet->setCellValue('E'.$row, $registro['puesto']);
+            $sheet->setCellValue('F'.$row, $color);
+            $sheet->setCellValue('G'.$row, $registro['estacionamiento']);
+            $sheet->setCellValue('H'.$row, ($registro['statusInvitado'] == 0) ? 'Ausente' : 'Presente');
+            $sheet->setCellValue('I'.$row, $invitados);
             $row++;
         }
-
+    
+        $sheet->setCellValue('I'.$row, 'Total de invitados: '.$tInvitados);
+    
+        // Ajustar automáticamente el ancho de las columnas
+        foreach(range('A','I') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+    
+        // Establecer estilo para el título de las columnas
+        $styleTitle = [
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => 'FFFFFF'], // Color del texto (blanco)
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '333333'], // Color de fondo oscuro
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER, // Alinear texto al centro
+            ],
+        ];
+        $sheet->getStyle('A4:I4')->applyFromArray($styleTitle); // Aplicar estilo a las celdas del título
+    
         // Generar el archivo de Excel
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-
-        // Forzar la descarga del archivo
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="lista_invitados.xlsx"');
-        $writer->save('php://output');
+    
+        // Definir la ruta del directorio donde se guardará el archivo
+        $directoryPath = __DIR__ . '/../view/assets/docs/' . $idEvent;
+    
+        // Crear el directorio si no existe
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
+        }
+    
+        // Ruta al archivo donde se guardará
+        $filePath = $directoryPath . '/lista_invitados.xlsx';
+    
+        // Guardar el archivo
+        $writer->save($filePath);
+    
+        // Retornar la ruta del archivo guardado en caso de que se necesite
+        return 'ok';
     }
 
     static public function mdlSearchUsers($email) {

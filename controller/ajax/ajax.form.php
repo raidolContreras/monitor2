@@ -29,7 +29,7 @@ if (isset($_POST['function'])) {
 } else if (isset($_POST['closeEvent'])) {
     echo FormsController::ctrCloseEvent($_POST['closeEvent']);
 } else if (isset($_POST['downloadAttendanceList'])) {
-    FormsController::ctrDownloadEvent($_POST['downloadAttendanceList']);
+    echo FormsController::ctrDownloadEvent($_POST['downloadAttendanceList']);
 } else if (isset($_POST['activateEvent'])) {
     echo FormsController::ctrActivateEvent($_POST['activateEvent']);
 }
