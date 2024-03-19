@@ -1,20 +1,7 @@
 $(document).ready(function() {
     var idEvent = $('input[name="idEvent"]').val();
-    $.ajax({
-        type: 'POST',
-        url: 'controller/ajax/getEvents.php',
-        data: {'event': idEvent},
-        dataType: 'json',
-        success: function(response) {
-            // Verifica si la respuesta tiene la propiedad 'nameEvent'
-            if (response.hasOwnProperty('nameEvent')) {
-                $('#evento').text(response.nameEvent); // Actualiza el contenido del elemento con el ID 'evento'
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
+
+    cargarEventos(idEvent);
 
     $('#tableEvents').DataTable({
         ajax: {
@@ -113,7 +100,7 @@ $(document).ready(function() {
                         } else {
                             return `
                                 <center class="table-columns row" style="justify-content: center;">
-                                    
+                                    Ausente
                                 </center>
                             `;
                         }
@@ -197,3 +184,51 @@ function rechazar(id){
     setInterval(function() {
         $('#tableEvents').DataTable().ajax.reload();
     }, 30000);
+
+function nInvitados($idEvent) {
+    $.ajax({
+        type: "POST",
+        url: "controller/ajax/ajax.form.php",
+        data: {
+            function: 5,
+            event: idEvent,
+        },
+        success: function (response) {				
+            
+            if (response === 'ok') {
+
+                clearForm();
+                $('#tableEvents').DataTable().ajax.reload();
+
+            } else {
+                
+            }
+        },
+        error: function (error) {
+            console.log("Error en la solicitud Ajax:", error);
+        }
+    });
+}
+
+function cargarEventos(idEvent) {
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getEvents.php',
+        data: {'event': idEvent},
+        dataType: 'json',
+        success: function(response) {
+            if (response.hasOwnProperty('nameEvent')) {
+                $('#evento').text(response.nameEvent);
+                $('.invitados .dt-column-title').html(response.nInvitados + ' asistentes');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+setInterval(function() {
+    var idEvent = $('input[name="idEvent"]').val();
+    cargarEventos(idEvent);
+}, 20000);

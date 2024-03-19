@@ -28,6 +28,10 @@
 				<th>Anfitrión</th>
 				<th>Asistencia</th>
 			</thead>
+      <tfoot>
+        <td colspan="4">Total de asistentes</td>
+        <td colspan="3" class="invitados">0 invitados</td>
+      </tfoot>
 		</table>
 	</div>
 </main>

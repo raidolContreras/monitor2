@@ -6,7 +6,9 @@ class FormsModel {
         try {
             $pdo = Conexion::conectar();
             if ($idEvent !== null) {
-                $stmt = $pdo->prepare('SELECT * FROM unimo_events WHERE idEvent = :idEvent');
+                $stmt = $pdo->prepare('SELECT e.*, SUM(i.invitados) AS nInvitados FROM unimo_events e
+                                            LEFT JOIN unimo_invitados i ON i.idEvent = e.idEvent
+                                        WHERE e.idEvent = :idEvent');
                 $stmt->bindParam(':idEvent', $idEvent, PDO::PARAM_INT);
     
                 $stmt->execute();
