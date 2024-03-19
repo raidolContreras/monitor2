@@ -1,7 +1,21 @@
 $(document).ready(function() {
     var idEvent = $('input[name="idEvent"]').val();
-
-    cargarEventos(idEvent);
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getEvents.php',
+        data: {'event': idEvent},
+        dataType: 'json',
+        success: function(response) {
+            // Verifica si la respuesta tiene la propiedad 'nameEvent'
+            if (response.hasOwnProperty('nameEvent')) {
+                $('#evento').text(response.nameEvent);
+                $('.invitados .dt-column-title').html(response.nInvitados + ' invitados');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
 
     $('#tableEvents').DataTable({
         ajax: {
@@ -209,26 +223,3 @@ function nInvitados($idEvent) {
         }
     });
 }
-
-function cargarEventos(idEvent) {
-    $.ajax({
-        type: 'POST',
-        url: 'controller/ajax/getEvents.php',
-        data: {'event': idEvent},
-        dataType: 'json',
-        success: function(response) {
-            if (response.hasOwnProperty('nameEvent')) {
-                $('#evento').text(response.nameEvent);
-                $('.invitados .dt-column-title').html(response.nInvitados + ' asistentes');
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
-}
-
-setInterval(function() {
-    var idEvent = $('input[name="idEvent"]').val();
-    cargarEventos(idEvent);
-}, 20000);
