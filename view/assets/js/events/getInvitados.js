@@ -1,8 +1,6 @@
 $(document).ready(function() {
     var idEvent = $('input[name="idEvent"]').val();
 
-    obtenerEvento(idEvent);
-
     $('#tableEvents').DataTable({
         ajax: {
             type: 'POST',
@@ -123,7 +121,10 @@ $(document).ready(function() {
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
         }
+        
     });
+    
+    obtenerEvento(idEvent);
 
     $("form.events").submit(function (event) {
         event.preventDefault();
