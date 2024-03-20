@@ -147,6 +147,11 @@ $(document).ready(function() {
             "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
         }
     });
+    
+    // Ejecuta la función nInvitados después de que la DataTable se ha cargado completamente
+    $('#tableEvents').on('draw.dt', function() {
+        nInvitados(idEvent);
+    });
 
     $("form.events").submit(function (event) {
         event.preventDefault();
@@ -174,7 +179,6 @@ $(document).ready(function() {
             }
         });
     });
-    nInvitados(idEvent);
 });
 
 function aceptar(id){
@@ -208,6 +212,7 @@ function rechazar(id){
 
 setInterval(function() {
     $('#tableEvents').DataTable().ajax.reload();
+    var idEvent = $('input[name="idEvent"]').val();
 }, 30000);
 
 function  nInvitados(idEvent){
