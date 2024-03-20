@@ -11,7 +11,7 @@
 <main class="container">
     <div class="card-custom">
         <div class="card-header-custom">
-            <strong id="evento"></strong>
+            <strong id="evento" class="evento"></strong>
         </div>
     </div>
 	<button id="sheetjsexport" class="btn btn-primary mb-3">Exportar excel</button>

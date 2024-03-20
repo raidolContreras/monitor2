@@ -15494,3 +15494,39 @@ body {
 .dz-button span {
   font-size: 12px;
 }
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.col-1 {
+  flex: 0 0 auto; /* Hace que el botón de la flecha tenga un ancho automático */
+}
+
+.evento {
+  flex: 1; /* Hace que el texto ocupe el espacio restante */
+  text-align: center; /* Alinea el texto en el centro */
+  overflow: hidden; /* Oculta el desbordamiento de texto */
+  white-space: nowrap; /* Evita el salto de línea */
+  text-overflow: ellipsis; /* Agrega puntos suspensivos si el texto es demasiado largo */
+}
+
+
+.btn-back:hover .fa-chevron-left {
+  opacity: 1;
+  animation: bounce2 1s infinite alternate; /* Aplicar la animación de rebote al hacer hover */
+  color: #0c4128;
+}
+
+@keyframes bounce2 {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

@@ -9,7 +9,15 @@ $(document).ready(function() {
         success: function(response) {
             // Verifica si la respuesta tiene la propiedad 'nameEvent'
             if (response.hasOwnProperty('nameEvent')) {
-                $('#evento').text(response.nameEvent);
+                $('.card-header-custom').html(`
+                    <a class="col-1 btn-back" href="./"> <i class="fas fa-chevron-left"></i> </a>
+                    <strong id="evento" class="evento col-10"></strong>
+                    <div class="col-1"></div>
+                `);
+                
+                $('#evento').html(`
+                    ${response.nameEvent}
+                `);
                 $('.invitados .dt-column-title').html(response.nInvitados + ' invitados');
             }
         },
