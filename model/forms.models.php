@@ -10,6 +10,14 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
+// the below code fragment can be found in:
+use PhpOffice\PhpSpreadsheet\Chart\Chart;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeries;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
+use PhpOffice\PhpSpreadsheet\Chart\PlotArea;
+use PhpOffice\PhpSpreadsheet\Chart\Legend;
+use PhpOffice\PhpSpreadsheet\Chart\Title;
+
 
 include "conection.php";
 
@@ -211,6 +219,8 @@ class FormsModel {
     }    
 
     static public function mdlDownloadEvent($idEvent) {
+        $presentes = 0;
+        $ausentes = 0;
         $registros = FormsModel::mdlGetInvitados($idEvent);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -253,7 +263,11 @@ class FormsModel {
             } else {
                 $color = 'Rojo';
             }
-    
+            
+            $presentes += $registro['invitados'];
+            if ($registro['invitados'] === null) {
+                $ausentes++;
+            }
             $tInvitados += $registro['invitados'];
             $invitados = ($registro['invitados'] === null) ? 0 : $registro['invitados'];
     
@@ -290,6 +304,65 @@ class FormsModel {
                 'horizontal' => Alignment::HORIZONTAL_CENTER, // Alinear texto al centro
             ],
         ];
+
+        // Datos para el gráfico
+        $categories = [
+            new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$L$2:$L$3', null, 1),
+            new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$L$3:$M$3', null, 1)
+        ];
+        $values = [
+            new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, 'Worksheet!$M$2:$M$3', null, 1, [$ausentes]),
+            new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, 'Worksheet!$M$3:$M$3', null, 1, [$presentes])
+        ];
+
+        // Cargar los datos en el gráfico
+        $series = new DataSeries(
+            DataSeries::TYPE_PIECHART, // Cambiar si se desea otro tipo de gráfico
+            null, // DataSeries::GROUPING_CLUSTERED, // Sin agrupar para gráficos de pastel
+            range(0, count($values)-1),
+            [],
+            $categories,
+            $values
+        );
+
+        $plotArea = new PlotArea(null, [$series]);
+        $title = new Title('Asistencia de Invitados');
+        $legend = new Legend(Legend::POSITION_RIGHT, null, false);
+
+        // Crear el gráfico
+        $chart = new Chart(
+            'chart1',
+            $title,
+            $legend,
+            $plotArea
+        );
+
+        // Definir la posición del gráfico en la hoja de cálculo
+        $chart->setTopLeftPosition('K2');
+        $chart->setBottomRightPosition('P15');
+
+        // Añadir el gráfico a la hoja de cálculo
+        $sheet->addChart($chart);
+
+        // Establecer estilo para los contadores
+        $styleCounters = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+            ],
+        ];
+
+        // Añadir los datos para el gráfico en la hoja
+        $sheet->setCellValue('L2', 'Ausentes');
+        $sheet->setCellValue('L3', 'Presentes');
+        $sheet->setCellValue('M2', $ausentes);
+        $sheet->setCellValue('M3', $presentes);
+        $sheet->getStyle('L2:M3')->applyFromArray($styleCounters);
+
+        // Guardar el archivo, incluyendo el gráfico
+
         $sheet->getStyle('A4:I4')->applyFromArray($styleTitle); // Aplicar estilo a las celdas del título
     
         // Generar el archivo de Excel
@@ -306,6 +379,7 @@ class FormsModel {
         // Ruta al archivo donde se guardará
         $filePath = $directoryPath . '/lista_invitados.xlsx';
     
+        $writer->setIncludeCharts(true);
         // Guardar el archivo
         $writer->save($filePath);
     

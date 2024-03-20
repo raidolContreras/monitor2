@@ -59,7 +59,7 @@ $(document).ready(function() {
 						return `
 						<center class="table-columns">
 							Terminado | 
-							<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Vel asistencia del" data-type="5">Ver asistencia</button>
+							<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Ver asistencia del" data-type="5">Ver asistencia</button>
 						</center>
 						`;
 					}

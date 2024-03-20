@@ -29,7 +29,17 @@ if (isset($_POST['function'])) {
 } else if (isset($_POST['closeEvent'])) {
     echo FormsController::ctrCloseEvent($_POST['closeEvent']);
 } else if (isset($_POST['downloadAttendanceList'])) {
-    echo FormsController::ctrDownloadEvent($_POST['downloadAttendanceList']);
+    $resultado = FormsController::ctrDownloadEvent($_POST['downloadAttendanceList']);
+    if ($resultado == 'ok') {
+        $eventId = $_POST['downloadAttendanceList'];
+        $filePath = '../../view/assets/docs/' . $eventId . '/lista_invitados.xlsx';
+        if (file_exists($filePath)) {
+            echo 'ok';
+        } else {
+            echo 'El archivo no existe.';
+        }
+    }
+
 } else if (isset($_POST['activateEvent'])) {
     echo FormsController::ctrActivateEvent($_POST['activateEvent']);
 }

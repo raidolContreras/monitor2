@@ -52,7 +52,30 @@ $(document).on('click', '#modalAcceptButton', function() {
         url: "controller/ajax/ajax.form.php",
         data: formData, 
         success: function(response) {
-			verificarEventosActivos();
+            
+            var formDataArray = formData.split('&');
+            var downloadAttendanceListPresent = false;
+            for (var i = 0; i < formDataArray.length; i++) {
+                var pair = formDataArray[i].split('=');
+                if (pair[0] === 'downloadAttendanceList') {
+                    
+                    if (response === 'ok'){
+                        downloadAttendanceListPresent = pair[1];
+                        $('.titleEvent').html('Descargar asistencia');
+                        $('.resultFooter').html('');
+                        $('.resultModal').html(`
+                            <center>
+                                <a class="btn btn-success" href="view/assets/docs/${downloadAttendanceListPresent}/lista_invitados.xlsx" download> Descargar </a>
+                            </center>
+                        `);
+                        $('#resultModal').modal('show');
+                    }
+                }
+            }
+            if (response === 'finalizado') {
+                $('#tableEvents').DataTable().ajax.reload();
+            }
+            verificarEventosActivos();
         },
         error: function(error) {
             // Maneja el error si es necesario

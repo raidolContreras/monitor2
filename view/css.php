@@ -7,6 +7,7 @@
     href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet"
 />
+<link rel="icon" type="image/x-icon" href="view/assets/images/favicon.ico">
 
 <link rel="stylesheet" href="view/assets/fonts/icomoon/style.css" />
 <link rel="stylesheet" href="view/assets/fonts/flaticon/font/flaticon.css" />

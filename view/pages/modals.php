@@ -61,7 +61,7 @@
 			<div class="modal-body resultModal">
 
 			</div>
-            <div class="modal-footer">
+            <div class="modal-footer resultFooter">
 				<div class="center-buttons mt-4">
 					<button class="btn btn-primary mx-1" data-bs-dismiss="modal">Aceptar</button>
 				</div>
