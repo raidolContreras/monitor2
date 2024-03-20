@@ -15409,6 +15409,47 @@ body {
   transform: translateX(5px); /* Mover el ícono 5px hacia la derecha al hacer hover */
 }
 
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.btn-download .download-text {
+  transition: transform 0.3s ease;
+}
+
+.btn-download:hover .download-text {
+  transform: translateX(10px); /* Desplazar el texto hacia la derecha al hacer hover */
+}
+
+.btn-download .fa-arrow-down {
+  position: absolute;
+  left: calc(10% + 3px);
+  top: 30%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.btn-download:hover .fa-arrow-down {
+  opacity: 1;
+  animation: bounce 1s infinite alternate; /* Aplicar la animación de rebote al hacer hover */
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .btn-circle-success,
 .btn-circle-danger {
   width: 30px; /* Ajusta el tamaño según sea necesario */

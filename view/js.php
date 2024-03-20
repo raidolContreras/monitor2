@@ -65,7 +65,10 @@ $(document).on('click', '#modalAcceptButton', function() {
                         $('.resultFooter').html('');
                         $('.resultModal').html(`
                             <center>
-                                <a class="btn btn-success" href="view/assets/docs/${downloadAttendanceListPresent}/lista_invitados.xlsx" download> Descargar </a>
+                            <a class="btn btn-success btn-download" href="view/assets/docs/${downloadAttendanceListPresent}/lista_invitados.xlsx" download>
+                                <span class="download-text">Descargar</span>
+                                <i class="fas fa-arrow-down"></i>
+                            </a>
                             </center>
                         `);
                         $('#resultModal').modal('show');
