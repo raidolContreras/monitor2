@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var idEvent = $('input[name="idEvent"]').val();
-
+    
     $.ajax({
         type: 'POST',
         url: 'controller/ajax/getEvents.php',
@@ -165,25 +165,6 @@ $(document).ready(function() {
                 if (response === 'ok') {
                     clearForm();
                     $('#tableEvents').DataTable().ajax.reload();
-                    
-                    var idEvent = $('input[name="idEvent"]').val();
-
-                    $.ajax({
-                        type: 'POST',
-                        url: 'controller/ajax/getEvents.php',
-                        data: {'event': idEvent},
-                        dataType: 'json',
-                        success: function(response) {
-                            // Verifica si la respuesta tiene la propiedad 'nameEvent'
-                            if (response.hasOwnProperty('nameEvent')) {
-                                $('#evento').text(response.nameEvent);
-                                $('.invitados .dt-column-title').html(response.nInvitados + ' invitados');
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
                 } else {
                     
                 }
@@ -193,6 +174,7 @@ $(document).ready(function() {
             }
         });
     });
+    nInvitados(idEvents);
 });
 
 function aceptar(id){
@@ -227,3 +209,22 @@ function rechazar(id){
 setInterval(function() {
     $('#tableEvents').DataTable().ajax.reload();
 }, 30000);
+
+function  nInvitados(idEvent){
+
+    $.ajax({
+        type: 'POST',
+        url: 'controller/ajax/getEvents.php',
+        data: {'event': idEvent},
+        dataType: 'json',
+        success: function(response) {
+            // Verifica si la respuesta tiene la propiedad 'nameEvent'
+            if (response.hasOwnProperty('nameEvent')) {
+                $('.invitados .dt-column-title').html(response.nInvitados + ' invitados');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
