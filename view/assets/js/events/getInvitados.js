@@ -174,7 +174,7 @@ $(document).ready(function() {
             }
         });
     });
-    nInvitados(idEvents);
+    nInvitados(idEvent);
 });
 
 function aceptar(id){
