@@ -11,7 +11,7 @@ $(document).ready(function() {
             if (response.hasOwnProperty('nameEvent')) {
                 $('.card-header-custom').html(`
                     <a class="col-1 btn-back" href="./"> <i class="fas fa-chevron-left"></i> </a>
-                    <strong id="evento" class="evento col-10"></strong>
+                        <strong id="evento" class="evento col-10"></strong>
                     <div class="col-1"></div>
                 `);
                 
