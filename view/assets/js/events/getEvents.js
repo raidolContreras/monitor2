@@ -59,7 +59,6 @@ $(document).ready(function() {
 						if (active === 'ok'){
 							return `
 							<center class="table-columns">
-								<button class="btn-custom btn-modal btn-activar" data-id="${data.idEvent}" data-title="Activar" data-type="1">Activar</button> | 
 								Terminado | 
 								<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Ver asistencia del" data-type="5">Ver asistencia</button>
 							</center>
@@ -67,6 +66,7 @@ $(document).ready(function() {
 						} else {
 							return `
 							<center class="table-columns">
+								<button class="btn-custom btn-modal btn-activar" data-id="${data.idEvent}" data-title="Activar" data-type="1">Activar</button> | 
 								Terminado | 
 								<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Ver asistencia del" data-type="5">Ver asistencia</button>
 							</center>
