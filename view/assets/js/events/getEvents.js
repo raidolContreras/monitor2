@@ -92,6 +92,12 @@ $(document).ready(function() {
 		}
 	});
 
+
+	setInterval(function() {
+		$('#tableEvents').DataTable().ajax.reload();
+		var idEvent = $('input[name="idEvent"]').val();
+	}, 5000);
+
 	$("form.events").submit(function (event) {
 		event.preventDefault();
 		// Collect form values
