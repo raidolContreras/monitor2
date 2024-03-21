@@ -53,6 +53,7 @@ $(document).on('click', '#modalAcceptButton', function() {
         data: formData, 
         success: function(response) {
             
+            verificarEventosActivos();
             var formDataArray = formData.split('&');
             var downloadAttendanceListPresent = false;
             for (var i = 0; i < formDataArray.length; i++) {
@@ -75,7 +76,6 @@ $(document).on('click', '#modalAcceptButton', function() {
                     }
                 }
             }
-            verificarEventosActivos();
             $('#tableEvents').DataTable().ajax.reload();
         },
         error: function(error) {
