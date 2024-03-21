@@ -194,6 +194,7 @@ function aceptar(id){
     $('.titleEvent').text(`Confirmación de Asistencia`);
     $('.contentModal').html(content);
     $('#actionModal').modal('show');
+    $('#tableEvents').DataTable().ajax.reload();
 }
 
 function rechazar(id){
@@ -208,6 +209,7 @@ function rechazar(id){
     $('.titleEvent').text(`Marcar como Ausente`);
     $('.contentModal').html(content);
     $('#actionModal').modal('show');
+    $('#tableEvents').DataTable().ajax.reload();
 }
 
 setInterval(function() {
