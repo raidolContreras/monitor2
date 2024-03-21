@@ -75,7 +75,7 @@ $(document).on('click', '#modalAcceptButton', function() {
                     }
                 }
             }
-            if (response === 'finalizado') {
+            if (response === 'finalizado' || response === 'activado') {
                 $('#tableEvents').DataTable().ajax.reload();
             }
             verificarEventosActivos();
