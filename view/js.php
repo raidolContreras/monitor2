@@ -75,8 +75,8 @@ $(document).on('click', '#modalAcceptButton', function() {
                     }
                 }
             }
-            $('#tableEvents').DataTable().ajax.reload();
             verificarEventosActivos();
+            $('#tableEvents').DataTable().ajax.reload();
         },
         error: function(error) {
             // Maneja el error si es necesario
