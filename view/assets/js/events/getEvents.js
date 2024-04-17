@@ -94,7 +94,7 @@ $(document).ready(function() {
 
 	setInterval(function() {
 		$('#tableEvents').DataTable().ajax.reload();
-	}, 30000);
+	}, 10000);
 
 	$("form.events").submit(function (event) {
 		event.preventDefault();

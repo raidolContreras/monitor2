@@ -47,119 +47,102 @@ $(document).ready(function() {
 });
 
 function setupDataTables(idEvent) {
-    $('#tableEvents').DataTable({
-        ajax: {
+	$('#tableEvents').DataTable({
+		ajax: {
             type: 'POST',
             url: 'controller/ajax/getInvitados.php',
             data: {'event': idEvent},
             dataType: 'json',
             dataSrc: ''
-        },
-        columns:[
-            {
-                data: null,
-                render: function(data) {
-                    return `
-                        <center class="table-columns">
-                            ${data.lastname} ${data.firstname}
-                        </center>
-                    `;
-                }
-            },
-            {
-                data: null,
-                render: function(data) {
-                    return `
-                        <center class="table-columns">
-                            ${data.institucion}
-                        </center>
-                    `;
-                }
-            },
-            {
-                data: null,
-                render: function(data) {
-                    return `
-                        <center class="table-columns">
-                            ${data.puesto}
-                        </center>
-                    `;
-                }
-            },
-            {
-                data: null,
-                render: function(data) {
-                    let colorIcon;
-                    switch (data.color) {
-                        case '1':
-                            textColor = 'Rojo';
-                            colorIcon = 'red';
-                            break;
-                        case '2':
-                            textColor = 'Amarillo';
-                            colorIcon = '#FFA500';
-                            break;
-                        default:
-                            textColor = 'Verde';
-                            colorIcon = 'green';
-                    }
-                    return `
-                        <center class="table-columns row" style="justify-content: center;">
-                            <i class="fas fa-circle" style="color: ${colorIcon};"></i> ${textColor}
-                        </center>
-                    `;
-                }
-            },
-            {
-                data: null,
-                render: function(data) {
-                    return `
-                        <center class="table-columns">
-                            ${data.estacionamiento}
-                        </center>
-                    `;
-                }
-            },
-            {
-                data: null,
-                render: function(data) {
-                    return `
-                        <center class="table-columns">
-                            ${data.anfitrion}
-                        </center>
-                    `;
-                }
-            },
-            {
-                data: null,
-                render: function(data) {
-                    if (data.statusInvitado == 0) {
-                        return `
-                            <center class="table-columns row" style="justify-content: center;">
-                                <button class="btn-circle-success" onClick="aceptar(`+data.idInvitado+`)"><i class="fas fa-check"></i></button>
-                                <button class="btn-circle-danger" onClick="rechazar(`+data.idInvitado+`)"><i class="fas fa-times"></i></button>
-                            </center>
-                        `;
-                    } else if (data.statusInvitado == 1) {
-                        return `
-                            <center class="table-columns">
-                                Presente
-                            </center>
-                        `;
-                    } else {
-                        return `
-                            <center class="table-columns">
-                                Ausente
-                            </center>
-                        `;
-                    }
-                }
-            }
-        ],
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
-        }
-    });
+		},
+		columns:[
+			{
+				data: null,
+				render: function(data) {
+					return `
+					<center class="table-columns">
+						`+data.nameEvent+`
+					</center>
+					`;
+				}
+			},
+			{
+				data: null,
+				render: function(data) {
+					return `
+					<center class="table-columns">
+						`+data.dateEvent+`
+					</center>
+					`;
+				}
+			},
+			{
+				data: null,
+				render: function(data) {
+					if(data.statusEvent == 0){
+						if (active === 'ok'){
+							return `
+							<center class="table-columns"> 
+								<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Editar" data-type="2" data-name="${data.nameEvent}" data-date="${data.dateEvent}">Editar</button> | 
+								<button class="btn-custom btn-modal btn-eliminar" data-id="${data.idEvent}" data-title="Eliminar" data-type="3">Eliminar</button>
+							</center>
+							`;
+						} else {
+							return `
+							<center class="table-columns">
+								<button class="btn-custom btn-modal btn-activar" data-id="${data.idEvent}" data-title="Activar" data-type="1">Activar</button> | 
+								<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Editar" data-type="2" data-name="${data.nameEvent}" data-date="${data.dateEvent}">Editar</button> | 
+								<button class="btn-custom btn-modal btn-eliminar" data-id="${data.idEvent}" data-title="Eliminar" data-type="3">Eliminar</button>
+							</center>
+							`;
+						}
+					} else if (data.statusEvent == 1) {
+						return `
+						<center class="table-columns">
+							Activo | 
+							<button class="btn-custom btn-modal btn-eliminar" data-id="${data.idEvent}" data-title="Finalizar" data-type="4">Finalizar</button>
+						</center>
+						`;
+					} else {
+						if (active === 'ok'){
+							return `
+							<center class="table-columns">
+								Terminado | 
+								<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Ver asistencia del" data-type="5">Ver asistencia</button>
+							</center>
+							`;
+						} else {
+							return `
+							<center class="table-columns">
+								<button class="btn-custom btn-modal btn-activar" data-id="${data.idEvent}" data-title="Activar" data-type="1">Activar</button> | 
+								Terminado | 
+								<button class="btn-custom btn-modal btn-editar" data-id="${data.idEvent}" data-title="Ver asistencia del" data-type="5">Ver asistencia</button>
+							</center>
+							`;
+						}
+					}
+				}
+        
+			},
+			{
+				data: null,
+				render: function(data) {
+					return `
+						<center class="table-columns">
+							<button class="btn-custom btn-invitados" data-idEvent="` + data.idEvent + `">Ver invitados <i class="fas fa-chevron-right"></i></button>
+						</center>
+					`;
+				}
+			}
+		],
+		"language": {
+			"url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+		}
+	});
+
+	setInterval(function() {
+		$('#tableEvents').DataTable().ajax.reload();
+	}, 10000);
 }
 
 function aceptar(id){
