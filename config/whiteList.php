@@ -25,7 +25,7 @@
     
         } elseif ($pagina == 'login'){
     
-            header("Location: inicio");
+            header("Location: ?pagina=inicio");
             exit();
     
         } else {
@@ -36,6 +36,6 @@
     } elseif($pagina == 'login') {
         include "view/pages/login/login.php";
     } else {
-        header("Location: login");
+        header("Location: ?pagina=login");
         exit();
     }

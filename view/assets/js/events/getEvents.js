@@ -136,7 +136,7 @@ function clearForm(){
 
 $(document).on('click', '.btn-invitados', function() {
     var eventId = $(this).data('idevent');
-    window.location.href = 'invitados&event='+eventId; // Redirigir a la página de invitados
+    window.location.href = '?pagina=invitados&event='+eventId; // Redirigir a la página de invitados
 });
 
 $(document).on('click', '.btn-modal', function() {
