@@ -103,4 +103,49 @@ function verificarEventosActivos() {
         });
     });
 }
+
+function enviarFormulario() {
+    
+    var formData = $('#modalForm').serialize();
+    $('#actionModal').modal('hide');
+    $.ajax({
+        type: "POST",
+        url: "controller/ajax/ajax.form.php",
+        data: formData, 
+        success: function(response) {
+            
+            $('#tableEvents').DataTable().ajax.reload();
+            var formDataArray = formData.split('&');
+            var downloadAttendanceListPresent = false;
+            for (var i = 0; i < formDataArray.length; i++) {
+                var pair = formDataArray[i].split('=');
+                if (pair[0] === 'downloadAttendanceList') {
+                    
+                    if (response === 'ok'){
+                        downloadAttendanceListPresent = pair[1];
+                        $('.titleEvent').html('Descargar asistencia');
+                        $('.resultFooter').html('');
+                        $('.resultModal').html(`
+                            <center>
+                            <a class="btn btn-success btn-download" href="view/assets/docs/${downloadAttendanceListPresent}/lista_invitados.xlsx" download>
+                                <span class="download-text">Descargar</span>
+                                <i class="fas fa-arrow-down"></i>
+                            </a>
+                            </center>
+                        `);
+                        $('#resultModal').modal('show');
+                    }
+                }
+            }
+            verificarEventosActivos();
+            $('#tableEvents').DataTable().ajax.reload();
+        },
+        error: function(error) {
+            // Maneja el error si es necesario
+            console.log("Error en la solicitud AJAX:", error);
+        }
+    });
+    
+    $('#tableEvents').DataTable().ajax.reload();
+}
 </script>

@@ -157,24 +157,31 @@ function setupDataTables(idEvent) {
             }
         ],
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
+            "url": "https://cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
         }
     });
 }
 
-function aceptar(id){
+function aceptar(id) {
     var content = `
-        <Form id="modalForm">
+        <form id="modalForm">
             <label for="nInvitados">Número de invitados:</label>
             <input type="number" class="form-control mb-2" value="1" min="1" name="nInvitados">
             <input type="hidden" name="enviarAsistencia" value="${id}">
             <input type="hidden" name="function" value="3">
         </form>
     `;
-    
+
     $('.titleEvent').text(`Confirmación de Asistencia`);
     $('.contentModal').html(content);
     $('#actionModal').modal('show');
+    $('#modalForm').on('keypress', function(e) {
+        if (e.which === 13) { // Si se presiona la tecla "Enter"
+            e.preventDefault(); // Evitar el envío del formulario normal (si existe)
+            enviarFormulario(); // Llamar a la función que envía el formulario
+        }
+    });
+    $('#tableEvents').DataTable().ajax.reload();
 }
 
 function rechazar(id){
