@@ -96,15 +96,14 @@ class FormsModel {
     }
     
     static public function mdlUploadInv($dato, $idEvent) {
-        $color = (strtolower($dato['color']) == 'rojo') ? 1 : ((strtolower($dato['color']) == 'amarillo') ? 2 : 0);
         print_r($dato);
         // Verifica que todos los datos necesarios estén presentes y no sean NULL
-        foreach ($dato as $value) {
-            if (trim($value) === '') {
-                // Puedes devolver un error o manejar este caso según sea necesario
-                return 'Error: Uno de los campos requeridos está vacío.';
-            }
-        }
+        // foreach ($dato as $value) {
+        //     if (trim($value) === '') {
+        //         // Puedes devolver un error o manejar este caso según sea necesario
+        //         return 'Error: Uno de los campos requeridos está vacío.';
+        //     }
+        // }
     
         $pdo = Conexion::conectar();
         $stmt = $pdo->prepare("INSERT INTO unimo_invitados (idEvent, firstname, lastname, anfitrion, institucion, puesto, estacionamiento, color) VALUES (:idEvent, :firstname, :lastname, :anfitrion, :institucion, :puesto, :estacionamiento, :color)");
@@ -117,7 +116,7 @@ class FormsModel {
         $stmt->bindParam(':institucion', $dato['institucion'], PDO::PARAM_STR);
         $stmt->bindParam(':puesto', $dato['puesto'], PDO::PARAM_STR);
         $stmt->bindParam(':estacionamiento', $dato['estacionamiento'], PDO::PARAM_STR);
-        $stmt->bindParam(':color', $color, PDO::PARAM_INT);
+        $stmt->bindParam(':color', $dato['color'], PDO::PARAM_STR);
     
         if (!$stmt->execute()) {
             // Devuelve información sobre el error si la inserción falla

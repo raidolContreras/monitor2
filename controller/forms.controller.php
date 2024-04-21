@@ -42,10 +42,14 @@ class FormsController {
 
     static public function ctrUploadInv($datos, $idEvent, $headers) {
         $results = [];
+        // print_r($datos);
         foreach ($datos as $dato){
             if (count($dato) !== count($headers)) {
                 // Si la cantidad de campos no coincide con los encabezados esperados, retornar error
                 return array('error' => 'La cantidad de campos no coincide con los encabezados esperados.');
+            }
+            if($dato == null) {
+                $dato = '';
             }
             $rowData = array_combine($headers, $dato);
             $result = FormsModel::mdlUploadInv($rowData, $idEvent);
