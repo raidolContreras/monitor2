@@ -68,24 +68,10 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function(data) {
-                    let colorIcon;
-                    switch (data.color) {
-                        case '1':
-                            textColor = 'Rojo';
-                            colorIcon = 'red';
-                            break;
-                        case '2':
-                            textColor = 'Amarillo';
-                            colorIcon = '#FFA500';
-                            break;
-                        default:
-                            textColor = 'Verde';
-                            colorIcon = 'green';
-                    }
                     return `
-                        <center class="table-columns row" style="justify-content: center;">
-                            <i class="fas fa-circle" style="color: ${colorIcon};"></i> ${textColor}
-                        </center>
+                    <center class="table-columns">
+                        ${data.color}
+                    </center>
                     `;
                 }
             },
