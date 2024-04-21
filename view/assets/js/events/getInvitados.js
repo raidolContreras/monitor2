@@ -103,7 +103,6 @@ $(document).ready(function() {
                             return `
                                 <center class="table-columns row" style="justify-content: center;">
                                     <button class="btn-circle-success" onClick="aceptar(`+data.idInvitado+`)"><i class="fas fa-check"></i></button>
-                                    <button class="btn-circle-danger" onClick="rechazar(`+data.idInvitado+`)"><i class="fas fa-times"></i></button>
                                 </center>
                             `;
                         } else {

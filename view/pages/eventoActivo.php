@@ -13,7 +13,7 @@
 				<th>Puesto</th>
 				<th>Sección</th>
 				<th>Estacionamiento</th>
-				<th>Anfitrión</th>
+				<th>Categoria</th>
 				<th>Asistencia</th>
 			</thead>
 		</table>
